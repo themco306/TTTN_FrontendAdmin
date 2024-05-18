@@ -29,6 +29,8 @@ function UserMyEdit() {
   const [previewAvatar, setPreviewAvatar] = useState("");
   const [selectAvatar, setSelectAvatar] = useState(null);
   const [email, setEmail] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [showOldPassword, setShowOldPassword] = useState(false);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -74,24 +76,14 @@ function UserMyEdit() {
     try{
         setLSubmit(true)
         
-          await validateUUser.validate({firstname,lastname,username,password,confirmPassword,email,phoneNumber},{abortEarly:false})
-  
-        const data={
-            firstname,
-            lastname,
-            username,
-            email,
-            password,
-            confirmPassword,
-            phoneNumber,
-            gender,
-            avatar:avatar
-        }
+          await validateUUser.validate({firstname,lastname,username,oldPassword,password,confirmPassword,email,phoneNumber},{abortEarly:false})
         const formData = new FormData();
         formData.append('firstname', firstname);
         formData.append('lastname', lastname);
         formData.append('username', username);
         formData.append('email', email);
+        formData.append('oldPassword', oldPassword);
+
         formData.append('password', password);
         formData.append('confirmPassword', confirmPassword);
         formData.append('phoneNumber', phoneNumber);
@@ -214,7 +206,25 @@ function UserMyEdit() {
 
           </div>
           <div className="col-md-6">
+          <label htmlFor="old-password" style={{ display: "block" }}>
+              Mật khẩu cũ:<span style={{ fontSize:'0.7em' }}>(Bỏ trống nếu không muốn đổi mật khẩu)</span>
+            </label>
+            <InputText
+              id="old-password"
+              type={showOldPassword ? "text" : "password"}
+              style={{ width: "90%" }}
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
+              autoComplete='new-password'
+            />
            
+
+            <Button
+              style={{ width: "10%" }}
+              onClick={() => setShowOldPassword(!showOldPassword)}
+              icon={!showPassword ? "pi pi-eye-slash" : "pi pi-eye"}
+            ></Button>
+             <ShowValiMsg>{errors.oldPassword}</ShowValiMsg>
 
           </div>
           <div className="col-md-6">

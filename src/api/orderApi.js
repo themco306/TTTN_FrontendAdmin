@@ -28,6 +28,6 @@ const orderApi={
         var url='products/delete-multiple'
         return axiosInstance.delete(url,{data})
     }
-
+ 
 }
 export default orderApi

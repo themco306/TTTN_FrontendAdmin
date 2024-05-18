@@ -170,7 +170,7 @@ function UserList() {
             headerStyle={{ width: "15%" }}
             header="Ảnh"
             body={(rowData) => (
-              <Avatar image={rowData.avatar&&(appUrl.avatarURL+rowData.avatar)} size="xlarge" shape="circle" />
+              <Avatar image={rowData.avatar&&(appUrl.avatarURL+rowData.avatar)} size="xlarge" shape="circle"  />
             )}
           ></Column>
           <Column
