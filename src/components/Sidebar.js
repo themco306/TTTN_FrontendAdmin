@@ -76,7 +76,14 @@ function Sidebar() {
         path: "order",
         claimType:"",
         claimValue:""
-      }
+      },
+      {
+        title:"Danh sách mã giảm giá",
+        path: "coupon",
+        claimType:"",
+        claimValue:""
+      },
+      
     ]
     },
   ]

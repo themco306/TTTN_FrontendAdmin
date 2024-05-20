@@ -4,21 +4,13 @@ const orderApi={
         var url='orders'
         return axiosInstance.get(url,{params})
     },
-    get(id,params){
-        var url='products/'+id
-        return axiosInstance.get(url,{params})
+    get(id){
+        var url='orders/'+id
+        return axiosInstance.get(url)
     },
-    add(data){
-        var url='products'
-        return axiosInstance.post(url,data)
-    },
-    update(id,data){
-        var url='products/'+id
+    updateStatus(id,data){
+        var url=`orders/${id}`
         return axiosInstance.put(url,data)
-    },
-    updateStatus(id){
-        var url=`products/${id}/status`
-        return axiosInstance.put(url)
     },
     delete(id){
         var url='products/'+id

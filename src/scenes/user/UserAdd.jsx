@@ -13,10 +13,12 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import AppRole from "../../helpers/AppRole";
 import { validateCUser } from "../../validate/validateUser";
+import { useDispatch } from "react-redux";
 
 function UserAdd() {
     const handleException = useCustomException();
     const navigate=useNavigate()
+    
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -130,7 +132,7 @@ function UserAdd() {
   return (
     <>
       <ContentHeader
-             currentPage={"Sửa Tài Khoản"}
+             currentPage={"Thêm Tài Khoản"}
              previousPage={"Tài khoản"}
              previousPath={"/user"}
       />

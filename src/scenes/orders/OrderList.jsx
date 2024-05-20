@@ -15,63 +15,63 @@ import { Tooltip } from "primereact/tooltip";
 import OrderStatus from "./OrderStatus";
 
 function OrderList() {
-  const getStatusText = (status) => {
+  const getStatusText = (status,paymentType) => {
     switch (status) {
-      case "PendingUserConfirmation":
+      case 'PendingUserConfirmation':
         return {
-          text: "Đã đặt hàng",
+          text: 'Chờ xác nhận',
           icon: "pi pi-file-check",
-          tooltip: "Chờ người mua xác nhận",
-          type: "info",
+          tooltip: "Đợi khách xác nhận đặt hàng",
+          type: "warn"
         };
-      case "Confirmed":
+      case 'Confirmed':
         return {
-          text: "Đã xác nhận",
+          text: 'Đã xác nhận',
           icon: "pi pi-box",
-          tooltip: "Chờ đóng gói hàng",
-          type: "success",
+          tooltip: paymentType==="OnlinePayment"?"Chờ khách thanh toán":"Cần đóng gói hàng",
+          type: "success"
         };
-      case "Shipped":
+      case 'Shipped':
         return {
-          text: "Đang giao hàng",
+          text: 'Đang giao hàng',
           icon: "pi pi-truck",
           tooltip: "Đang giao hàng",
-          type: "warn",
+          type: "warn"
         };
-      case "Delivered":
+      case 'Delivered':
         return {
-          text: "Đã giao hàng",
-          icon: "pi pi-dollar",
+          text: 'Đã giao hàng',
+          icon: "pi pi-check",
           tooltip: "Giao thành công",
-          type: "success",
+          type: "info"
         };
-      case "Received":
+      case 'Received':
         return {
-          text: "Đã nhận hàng",
-          icon: "pi pi-dollar",
-          tooltip: "Giao thành công",
-          type: "success",
+          text: 'Đã nhận hàng',
+          icon: "pi pi-check-circle",
+          tooltip: "Khách đã nhận hàng",
+          type: "success"
         };
-      case "PaymentCompleted":
+      case 'Cancelled':
         return {
-          text: "Đã giao hàng",
-          icon: "pi pi-dollar",
-          tooltip: "Giao thành công",
-          type: "success",
-        };
-      case "Cancelled":
-        return {
-          text: "Đơn bị hủy",
+          text: 'Đơn bị hủy',
           icon: "pi pi-times-circle",
           tooltip: "Đã hủy",
-          type: "error",
+          type: "error"
+        };
+      case 'PaymentCompleted':
+        return {
+          text: 'Đã thanh toán',
+          icon: "pi pi-credit-card",
+          tooltip: "Khách đã thanh toán,Cần đóng gói hàng",
+          type: "success"
         };
       default:
         return {
-          text: "Không xác định",
+          text: 'Không xác định',
           icon: "pi pi-question-circle",
           tooltip: "Trạng thái không xác định",
-          type: "info",
+          type: "info"
         };
     }
   };
@@ -157,6 +157,13 @@ function OrderList() {
               body={(rowData) => <span>{rowData.orderInfo.deliveryName}</span>}
             ></Column>
             <Column
+              headerStyle={{ width: "10%" }}
+              sortable
+              sortField="total"
+              header="Giá tiền"
+              body={(rowData)=><span>{rowData.total.toLocaleString()} VND</span>}
+            ></Column>
+            <Column
               headerStyle={{ width: "18%" }}
               sortable
               sortField="createdAt"
@@ -172,7 +179,7 @@ function OrderList() {
               header="Trạng thái"
               body={(rowData) => (
                 <OrderStatus
-                  data={getStatusText(rowData.status)}
+                  data={getStatusText(rowData.status,rowData.paymentType)}
                   id={rowData.id}
                 />
               )}
@@ -185,38 +192,17 @@ function OrderList() {
                   style={{ display: "flex", justifyContent: "space-around" }}
                   key={rowData.id}
                 >
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    {/* <InputSwitch
-                      checked={rowData.status === 1 ? true : false}
-                      onChange={() => handleChangeStatus(rowData.id)}
-                    /> */}
-                  </div>
-                  <Button
-                    icon={PrimeIcons.EYE}
-                    label="Xem"
-                    raised
-                    rounded
-                    onClick={() =>
-                      navigate("/product/show", { state: { id: rowData.id } })
-                    }
-                  />
                   <Button
                     icon={PrimeIcons.USER_EDIT}
-                    label="Sửa"
+                    label=""
+                    tooltip="Cập nhật trạng thái đơn hàng"
                     raised
                     rounded
                     onClick={() =>
-                      navigate("/product/edit", { state: { id: rowData.id } })
+                      navigate("/order/edit", { state: { id: rowData.id } })
                     }
                   />
-                  <Button
-                    icon={PrimeIcons.TRASH}
-                    label="Xóa"
-                    severity="danger"
-                    // onClick={() => handleConfirmDelete(rowData.id)}
-                    raised
-                    rounded
-                  />
+                 
                 </div>
               )}
             ></Column>

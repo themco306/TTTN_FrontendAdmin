@@ -37,6 +37,11 @@ import ConfirmEmail from "./scenes/ConfirmEmail/ConfirmEmail";
 import TagList from "./scenes/tags/TagList";
 import MyMap from "./components/MyMap";
 import WebInfoEdit from "./scenes/webInfo/WebInfoEdit";
+import CouponList from "./scenes/coupons/CouponList";
+import CouponAdd from "./scenes/coupons/CouponAdd";
+import CouponEdit from "./scenes/coupons/CouponEdit";
+import CouponShow from "./scenes/coupons/CouponShow";
+import OrderEdit from "./scenes/orders/OrderEdit";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
@@ -125,6 +130,46 @@ const router = createBrowserRouter([
         element: (
           
             <ClaimProtectedRoute claimType={ClaimType.ProductClaim} claimValue={ClaimValue.Show}><OrderList /></ClaimProtectedRoute>
+          
+        ),
+      },
+      {
+        path: "order/edit",
+        element: (
+          
+            <ClaimProtectedRoute claimType={ClaimType.ProductClaim} claimValue={ClaimValue.Edit}><OrderEdit /></ClaimProtectedRoute>
+          
+        ),
+      },
+      {
+        path: "coupon",
+        element: (
+          
+           <CouponList />
+          
+        ),
+      },
+      {
+        path: "coupon/create",
+        element: (
+          
+           <CouponAdd />
+          
+        ),
+      },
+      {
+        path: "coupon/edit",
+        element: (
+          
+           <CouponEdit />
+          
+        ),
+      },
+      {
+        path: "coupon/show",
+        element: (
+          
+           <CouponShow />
           
         ),
       },
