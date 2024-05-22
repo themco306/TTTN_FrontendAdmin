@@ -42,6 +42,11 @@ import CouponAdd from "./scenes/coupons/CouponAdd";
 import CouponEdit from "./scenes/coupons/CouponEdit";
 import CouponShow from "./scenes/coupons/CouponShow";
 import OrderEdit from "./scenes/orders/OrderEdit";
+import MenuList from "./scenes/menus/MenuList";
+import TopicList from "./scenes/Topics/TopicList";
+import PageList from "./scenes/pages/PageList";
+import PostList from "./scenes/posts/PostList";
+import PageAdd from "./scenes/pages/PageAdd";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
@@ -178,6 +183,22 @@ const router = createBrowserRouter([
         element:   <ClaimProtectedRoute claimType={ClaimType.CategoryClaim} claimValue={ClaimValue.Show}><CategoryList /></ClaimProtectedRoute>,
       },
       {
+        path: "topic",
+        element:   <ClaimProtectedRoute claimType={ClaimType.CategoryClaim} claimValue={ClaimValue.Show}><TopicList /></ClaimProtectedRoute>,
+      },
+      {
+        path: "page",
+        element:   <ClaimProtectedRoute claimType={ClaimType.CategoryClaim} claimValue={ClaimValue.Show}><PageList /></ClaimProtectedRoute>,
+      },
+      {
+        path: "page/create",
+        element:   <ClaimProtectedRoute claimType={ClaimType.CategoryClaim} claimValue={ClaimValue.Show}><PageAdd /></ClaimProtectedRoute>,
+      },
+      {
+        path: "post",
+        element:   <ClaimProtectedRoute claimType={ClaimType.CategoryClaim} claimValue={ClaimValue.Show}><PostList /></ClaimProtectedRoute>,
+      },
+      {
         path: "slider",
         element:   <ClaimProtectedRoute claimType={ClaimType.SliderClaim} claimValue={ClaimValue.Show}><SliderList /></ClaimProtectedRoute>,
       },
@@ -188,6 +209,10 @@ const router = createBrowserRouter([
       {
         path: "web-info",
         element:   <ClaimProtectedRoute claimType={ClaimType.SliderClaim} claimValue={ClaimValue.Show}><WebInfoEdit /></ClaimProtectedRoute>,
+      },
+      {
+        path: "menu",
+        element:   <ClaimProtectedRoute claimType={ClaimType.SliderClaim} claimValue={ClaimValue.Show}><MenuList /></ClaimProtectedRoute>,
       },
       {
         path: "brand",

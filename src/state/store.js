@@ -6,6 +6,9 @@ import userReducers from "./reducers/userReducers";
 import sliderReducers from "./reducers/sliderReducers";
 import orderReducers from "./reducers/orderReducers";
 import couponReducers from "./reducers/couponReducers";
+import menuReducers from "./reducers/menuReducers";
+import topicReducers from "./reducers/topicReducers";
+import pageReducers from "./reducers/pageReducers";
 
 export default configureStore({
     reducer: {
@@ -15,6 +18,9 @@ export default configureStore({
         userReducers,
         sliderReducers,
         orderReducers,
-        couponReducers
+        couponReducers,
+        menuReducers,
+        topicReducers,
+        pageReducers
     }
 })

@@ -66,6 +66,12 @@ function Sidebar() {
         claimType:ClaimType.ProductClaim,
         claimValue:ClaimValue.Show
       }
+      ,      {
+        title:"Quản lý Menu",
+        path:"menu",
+        claimType:ClaimType.ProductClaim,
+        claimValue:ClaimValue.Show
+      }
     ]
     },
     {
@@ -84,6 +90,29 @@ function Sidebar() {
         claimValue:""
       },
       
+    ]
+    },
+    {
+      title:"Quản lý bài viết",
+      items:[
+        {
+        title:"Chủ đề ",
+        path: "topic",
+        claimType:ClaimType.SliderClaim,
+        claimValue:ClaimValue.Show
+      },      {
+        title:"Bài viết",
+        path:"post",
+        claimType:ClaimType.ProductClaim,
+        claimValue:ClaimValue.Show
+
+      }
+      ,      {
+        title:"Trang đơn",
+        path:"page",
+        claimType:ClaimType.ProductClaim,
+        claimValue:ClaimValue.Show
+      }
     ]
     },
   ]
