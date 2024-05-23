@@ -9,6 +9,7 @@ import couponReducers from "./reducers/couponReducers";
 import menuReducers from "./reducers/menuReducers";
 import topicReducers from "./reducers/topicReducers";
 import pageReducers from "./reducers/pageReducers";
+import brandReducers from "./reducers/brandReducers";
 
 export default configureStore({
     reducer: {
@@ -21,6 +22,7 @@ export default configureStore({
         couponReducers,
         menuReducers,
         topicReducers,
-        pageReducers
+        pageReducers,
+        brandReducers
     }
 })

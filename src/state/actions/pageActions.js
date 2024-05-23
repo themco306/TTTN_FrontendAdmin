@@ -7,6 +7,7 @@ export const PageActionTypes = {
     UPDATE_STATUS_PAGE:'UPDATE_STATUS_PAGE',
     DELETE_PAGE: 'DELETE_PAGE',
     DELETE_PAGES: 'DELETE_PAGES',
+    CLEAR_PAGE: 'CLEAR_PAGE',
   };
   
   export const pageActions = {
@@ -34,6 +35,9 @@ export const PageActionTypes = {
     deletePages: (ids) => ({
       type: PageActionTypes.DELETE_PAGES,
       payload: ids,
+    }),
+    clearCategory: () => ({
+      type: PageActionTypes.CLEAR_PAGE,
     }),
   };
   

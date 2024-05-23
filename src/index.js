@@ -17,7 +17,7 @@ import { AuthProvider } from "./auth/AuthContext";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Login from "./scenes/Login/Login";
 import BrandList from "./scenes/brands/BrandList";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import ProductAdd from "./scenes/products/ProductAdd";
 import ProductEdit from "./scenes/products/ProductEdit";
 import ProductShow from "./scenes/products/ProductShow";
@@ -47,12 +47,22 @@ import TopicList from "./scenes/Topics/TopicList";
 import PageList from "./scenes/pages/PageList";
 import PostList from "./scenes/posts/PostList";
 import PageAdd from "./scenes/pages/PageAdd";
+import PageEdit from "./scenes/pages/PageEdit";
+import { PageActionTypes } from "./state/actions/pageActions";
+import PageShow from "./scenes/pages/PageShow";
+import PostAdd from "./scenes/posts/PostAdd";
+import PostEdit from "./scenes/posts/PostEdit";
+import PostShow from "./scenes/posts/PostShow";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <ProtectedRoute><App /></ProtectedRoute>,
+    element: (
+      <ProtectedRoute>
+        <App />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,
@@ -61,162 +71,290 @@ const router = createBrowserRouter([
       {
         path: "product",
         element: (
-          
-            <ClaimProtectedRoute claimType={ClaimType.ProductClaim} claimValue={ClaimValue.Show}><ProductList /></ClaimProtectedRoute>
-          
+          <ClaimProtectedRoute
+            claimType={ClaimType.ProductClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <ProductList />
+          </ClaimProtectedRoute>
         ),
       },
       {
         path: "product/create",
         element: (
-          
-          <ClaimProtectedRoute claimType={ClaimType.ProductClaim} claimValue={ClaimValue.Add}><ProductAdd /></ClaimProtectedRoute>
-          
+          <ClaimProtectedRoute
+            claimType={ClaimType.ProductClaim}
+            claimValue={ClaimValue.Add}
+          >
+            <ProductAdd />
+          </ClaimProtectedRoute>
         ),
       },
       {
         path: "product/edit",
         element: (
-          
-          <ClaimProtectedRoute claimType={ClaimType.ProductClaim} claimValue={ClaimValue.Edit}><ProductEdit /></ClaimProtectedRoute>
-          
+          <ClaimProtectedRoute
+            claimType={ClaimType.ProductClaim}
+            claimValue={ClaimValue.Edit}
+          >
+            <ProductEdit />
+          </ClaimProtectedRoute>
         ),
       },
       {
         path: "product/show",
         element: (
-          
-          <ClaimProtectedRoute claimType={ClaimType.ProductClaim} claimValue={ClaimValue.Show}><ProductShow /></ClaimProtectedRoute>
-          
+          <ClaimProtectedRoute
+            claimType={ClaimType.ProductClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <ProductShow />
+          </ClaimProtectedRoute>
         ),
       },
       {
         path: "user",
         element: (
-          
-          <ClaimProtectedRoute claimType={ClaimType.UserClaim} claimValue={ClaimValue.Show}><UserList /></ClaimProtectedRoute>
-          
+          <ClaimProtectedRoute
+            claimType={ClaimType.UserClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <UserList />
+          </ClaimProtectedRoute>
         ),
       },
       {
         path: "user/create",
         element: (
-          
-          <ClaimProtectedRoute claimType={ClaimType.UserClaim} claimValue={ClaimValue.Add}><UserAdd /></ClaimProtectedRoute>
-          
+          <ClaimProtectedRoute
+            claimType={ClaimType.UserClaim}
+            claimValue={ClaimValue.Add}
+          >
+            <UserAdd />
+          </ClaimProtectedRoute>
         ),
       },
       {
         path: "user/edit",
         element: (
-          
-          <ClaimProtectedRoute claimType={ClaimType.UserClaim} claimValue={ClaimValue.Edit}><UserEdit /></ClaimProtectedRoute>
-          
+          <ClaimProtectedRoute
+            claimType={ClaimType.UserClaim}
+            claimValue={ClaimValue.Edit}
+          >
+            <UserEdit />
+          </ClaimProtectedRoute>
         ),
       },
       {
         path: "user/show",
         element: (
-          
-          <ClaimProtectedRoute claimType={ClaimType.UserClaim} claimValue={ClaimValue.Show}><UserShow /></ClaimProtectedRoute>
-          
+          <ClaimProtectedRoute
+            claimType={ClaimType.UserClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <UserShow />
+          </ClaimProtectedRoute>
         ),
       },
       {
         path: "user/myEdit",
-        element: (
-          
-          <UserMyEdit />
-          
-        ),
+        element: <UserMyEdit />,
       },
       {
         path: "order",
         element: (
-          
-            <ClaimProtectedRoute claimType={ClaimType.ProductClaim} claimValue={ClaimValue.Show}><OrderList /></ClaimProtectedRoute>
-          
+          <ClaimProtectedRoute
+            claimType={ClaimType.ProductClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <OrderList />
+          </ClaimProtectedRoute>
         ),
       },
       {
         path: "order/edit",
         element: (
-          
-            <ClaimProtectedRoute claimType={ClaimType.ProductClaim} claimValue={ClaimValue.Edit}><OrderEdit /></ClaimProtectedRoute>
-          
+          <ClaimProtectedRoute
+            claimType={ClaimType.ProductClaim}
+            claimValue={ClaimValue.Edit}
+          >
+            <OrderEdit />
+          </ClaimProtectedRoute>
         ),
       },
       {
         path: "coupon",
-        element: (
-          
-           <CouponList />
-          
-        ),
+        element: <CouponList />,
       },
       {
         path: "coupon/create",
-        element: (
-          
-           <CouponAdd />
-          
-        ),
+        element: <CouponAdd />,
       },
       {
         path: "coupon/edit",
-        element: (
-          
-           <CouponEdit />
-          
-        ),
+        element: <CouponEdit />,
       },
       {
         path: "coupon/show",
-        element: (
-          
-           <CouponShow />
-          
-        ),
+        element: <CouponShow />,
       },
       {
         path: "category",
-        element:   <ClaimProtectedRoute claimType={ClaimType.CategoryClaim} claimValue={ClaimValue.Show}><CategoryList /></ClaimProtectedRoute>,
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.CategoryClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <CategoryList />
+          </ClaimProtectedRoute>
+        ),
       },
       {
         path: "topic",
-        element:   <ClaimProtectedRoute claimType={ClaimType.CategoryClaim} claimValue={ClaimValue.Show}><TopicList /></ClaimProtectedRoute>,
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.CategoryClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <TopicList />
+          </ClaimProtectedRoute>
+        ),
       },
       {
         path: "page",
-        element:   <ClaimProtectedRoute claimType={ClaimType.CategoryClaim} claimValue={ClaimValue.Show}><PageList /></ClaimProtectedRoute>,
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.CategoryClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <PageList />
+          </ClaimProtectedRoute>
+        ),
       },
       {
         path: "page/create",
-        element:   <ClaimProtectedRoute claimType={ClaimType.CategoryClaim} claimValue={ClaimValue.Show}><PageAdd /></ClaimProtectedRoute>,
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.CategoryClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <PageAdd />
+          </ClaimProtectedRoute>
+        ),
+      },
+      {
+        path: "page/edit",
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.CategoryClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <PageEdit />
+          </ClaimProtectedRoute>
+        ),
+      },
+      {
+        path: "page/show",
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.CategoryClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <PageShow />
+          </ClaimProtectedRoute>
+        ),
       },
       {
         path: "post",
-        element:   <ClaimProtectedRoute claimType={ClaimType.CategoryClaim} claimValue={ClaimValue.Show}><PostList /></ClaimProtectedRoute>,
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.CategoryClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <PostList />
+          </ClaimProtectedRoute>
+        ),
+      },
+      {
+        path: "post/create",
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.CategoryClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <PostAdd />
+          </ClaimProtectedRoute>
+        ),
+      },
+      {
+        path: "post/edit",
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.CategoryClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <PostEdit />
+          </ClaimProtectedRoute>
+        ),
+      },
+      {
+        path: "post/show",
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.CategoryClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <PostShow />
+          </ClaimProtectedRoute>
+        ),
       },
       {
         path: "slider",
-        element:   <ClaimProtectedRoute claimType={ClaimType.SliderClaim} claimValue={ClaimValue.Show}><SliderList /></ClaimProtectedRoute>,
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.SliderClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <SliderList />
+          </ClaimProtectedRoute>
+        ),
       },
       {
         path: "tag",
-        element:   <ClaimProtectedRoute claimType={ClaimType.SliderClaim} claimValue={ClaimValue.Show}><TagList /></ClaimProtectedRoute>,
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.SliderClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <TagList />
+          </ClaimProtectedRoute>
+        ),
       },
       {
         path: "web-info",
-        element:   <ClaimProtectedRoute claimType={ClaimType.SliderClaim} claimValue={ClaimValue.Show}><WebInfoEdit /></ClaimProtectedRoute>,
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.SliderClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <WebInfoEdit />
+          </ClaimProtectedRoute>
+        ),
       },
       {
         path: "menu",
-        element:   <ClaimProtectedRoute claimType={ClaimType.SliderClaim} claimValue={ClaimValue.Show}><MenuList /></ClaimProtectedRoute>,
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.SliderClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <MenuList />
+          </ClaimProtectedRoute>
+        ),
       },
       {
         path: "brand",
-        element:  <BrandList />,
+        element: <BrandList />,
       },
     ],
   },
@@ -226,37 +364,35 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <NotFound />, 
+    element: <NotFound />,
   },
   {
     path: "/403",
-    element: <NotForbidden />, 
+    element: <NotForbidden />,
   },
   {
     path: "/send-email",
-    element: <SendEmail />, 
+    element: <SendEmail />,
   },
   {
     path: "/confirm-email/:userId/:confirmEmailToken",
-    element: <ConfirmEmail />, 
+    element: <ConfirmEmail />,
   },
   {
     path: "/test",
-    element: <MyMap />, 
+    element: <MyMap />,
   },
 ]);
 
 root.render(
   <React.StrictMode>
-   
-      <Provider store={store}>
+    <Provider store={store}>
       <AuthProvider>
         <RouterProvider router={router}>
           <PrimeReactProvider></PrimeReactProvider>
         </RouterProvider>
-        </AuthProvider>
-      </Provider>
-   
+      </AuthProvider>
+    </Provider>
   </React.StrictMode>
 );
 

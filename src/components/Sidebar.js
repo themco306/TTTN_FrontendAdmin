@@ -10,6 +10,7 @@ function Sidebar() {
   const menuData=[
     {
       title:"Sản phẩm",
+      icon:"pi pi-objects-column",
       items:[
         {
         title:"Tất cả sản phẩm",
@@ -36,6 +37,7 @@ function Sidebar() {
     },
     {
       title:"Quản lý người dùng",
+      icon:"pi pi-users",
       items:[
         {
         title:"Nhân viên hệ thống",
@@ -47,6 +49,7 @@ function Sidebar() {
     },
     {
       title:"Quản lý giao diện",
+      icon:"pi pi-palette",
       items:[
         {
         title:"Hình ảnh bìa",
@@ -76,6 +79,7 @@ function Sidebar() {
     },
     {
       title:"Quản lý đơn hàng",
+      icon:"pi pi-money-bill",
       items:[
         {
         title:"Danh sách đơn hàng",
@@ -94,6 +98,7 @@ function Sidebar() {
     },
     {
       title:"Quản lý bài viết",
+      icon:"pi pi-file-edit",
       items:[
         {
         title:"Chủ đề ",
@@ -201,7 +206,7 @@ function Sidebar() {
                   style={{ height:1000 }}
                 >
                 {menuData.map((data)=>(
-                  <MenuItems key={data.title} title={data.title}  items={data.items} claims={user.claims} roles={user.roles}/>
+                  <MenuItems key={data.title} title={data.title}  items={data.items} claims={user.claims} roles={user.roles} icon={data.icon}/>
                 ))}
                 </ul>
               </nav>

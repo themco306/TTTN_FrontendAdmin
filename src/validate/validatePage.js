@@ -8,7 +8,7 @@ const validatePage = Yup.object({
     detail: Yup.string()
     .required('Chi tiết là bắt buộc')
     .min(2, 'Chi tiết phải có ít nhất 2 ký tự')
-    .max(5000, 'Chi tiết không được vượt quá 5000 ký tự'),
+    .max(50000, 'Chi tiết không được vượt quá 50000 ký tự'),
 });
 
 export default validatePage;

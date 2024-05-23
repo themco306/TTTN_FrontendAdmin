@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import AppRole from "../helpers/AppRole";
 
-function MenuItems({ title, items = [], claims = [], roles = [] }) {
+function MenuItems({ title, items = [], claims = [], roles = [],icon="" }) {
   console.log(claims)
   const isSuperAdmin = roles.includes(AppRole.SuperAdmin) ? true : false;
   const hasAccess = items.some(item => {
@@ -20,11 +20,10 @@ function MenuItems({ title, items = [], claims = [], roles = [] }) {
   const style = !hasAccess ? { display: "none" } : {};
   return (
     <li className="nav-item" style={style}>
-      <a href="#" className="nav-link ">
-        <i className="nav-icon fas fa-tachometer-alt" />
-        <p>
+      <a  className="nav-link ">
+        <i className={icon}  />
+        <p style={{ marginLeft:5 ,userSelect:'none'}}>
           {title}
-          <i className="right fas fa-angle-left" />
         </p>
       </a>
       <ul className="nav nav-treeview" style={{ display: "none" }}>
@@ -34,8 +33,8 @@ function MenuItems({ title, items = [], claims = [], roles = [] }) {
             hasClaim(item) && ( // Kiểm tra mục menu có quyền tương ứng không
               <li className="nav-item" key={item.title}>
                 <Link to={item.path} className="nav-link">
-                  <i className="far fa-circle nav-icon" />
-                  <p>{item.title}</p>
+                  <i className={"pi pi-plus"} />
+                  <p style={{ marginLeft:5 ,userSelect:'none'}}>{item.title}</p>
                 </Link>
               </li>
             )

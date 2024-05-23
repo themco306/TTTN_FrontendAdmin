@@ -22,6 +22,9 @@ import { toast } from 'react-toastify';
 import { validateCProduct } from '../../validate/validateProduct';
 import useCustomException from '../../helpers/useCustomException';
 import ShowValiMsg from '../../validate/ShowValiMsg';
+import TextEditor from '../../components/TextEditor';
+import brandApi from '../../api/brandApi';
+import { brandActions } from '../../state/actions/brandActions';
 
 function ProductEdit() {
     const location = useLocation();
@@ -38,6 +41,9 @@ function ProductEdit() {
     const categoryData = useSelector(
       (state) => state.categoryReducers.categories
     );
+    const brandData = useSelector(
+      (state) => state.brandReducers.brands
+    );
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [detail, setDetail] = useState("");
@@ -47,6 +53,7 @@ function ProductEdit() {
     const [salePrice, setSalePrice] = useState(0);
     const [status, setStatus] = useState(1);
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedBrand, setSelectedBrand] = useState(null);
     const [images, setImages] = useState([]);
     const [oldImages,setOldImages]=useState([])
     const [errors,setErrors]=useState({})
@@ -92,6 +99,22 @@ function ProductEdit() {
       fetchData();
     }, []);
     useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await brandApi.getAll();
+          console.log(response.data);
+          dispatch(brandActions.listBrand(response.data));
+         
+        } catch (error) {
+          if(error.response?.status){
+            handleException(error)
+  
+          }
+        }
+      };
+      fetchData();
+    }, []);
+    useEffect(() => {
       if (productData) {
         setName(productData.name)
         setDescription(productData.description)
@@ -104,6 +127,9 @@ function ProductEdit() {
         setOldImages(productData.galleries)
         if(categoryData){
           setSelectedCategory(categoryData.find((cate) => cate.id === productData.category?.id));
+        }
+        if(brandData){
+          setSelectedBrand(brandData.find((cate) => cate.id === productData.brand?.id));
         }
       }
       
@@ -140,7 +166,7 @@ function ProductEdit() {
     };
     const handleNext=async()=>{
       try{
-        await validateCProduct.validate({name,description,detail,quantity,buyingPrice,comparePrice,salePrice,selectedCategory},{abortEarly:false})
+        await validateCProduct.validate({name,description,detail,quantity,buyingPrice,comparePrice,salePrice,selectedCategory,selectedBrand},{abortEarly:false})
         stepperRef.current.nextCallback();
       }catch(error){
         const newError = {};
@@ -167,6 +193,7 @@ function ProductEdit() {
           productType: "string",
           note: "string",
           categoryId: selectedCategory?.id ?? null,
+          brandId: selectedBrand?.id ?? null,
           createdById: id,
           updatedById: id,
         };
@@ -246,14 +273,8 @@ function ProductEdit() {
                   <label htmlFor="name" style={{ display: "block" }}>
                     Mô tả chi tiết:
                   </label>
-                  <Editor
-                    value={detail}
-                    onTextChange={(e) => setDetail(e.htmlValue)}
-                    style={{ height: "320px" }}
-                  />
+                  <TextEditor initData={detail} setData={setDetail}/>
                      <ShowValiMsg>{errors.detail}</ShowValiMsg>
-
-                  <div dangerouslySetInnerHTML={{ __html: detail }} />
                 </div>
               </div>
               <div className="  col-md-4">
@@ -318,6 +339,22 @@ function ProductEdit() {
                     style={{ width: "100%" }}
                   />
                    <ShowValiMsg>{errors.selectedCategory}</ShowValiMsg>
+
+                </div>
+                <div className="col-md-12">
+                  <label htmlFor="brand" style={{ display: "block" }}>
+                    Thương hiệu:
+                  </label>
+                  <Dropdown
+                    value={selectedBrand}
+                    onChange={(e) => setSelectedBrand(e.value)}
+                    options={brandData}
+                    id="brand"
+                    optionLabel="name"
+                    placeholder="Chọn thương hiệu"
+                    style={{ width: "100%" }}
+                  />
+                   <ShowValiMsg>{errors.selectedBrand}</ShowValiMsg>
 
                 </div>
                 <div className="col-md-12">

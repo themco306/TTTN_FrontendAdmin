@@ -4,6 +4,10 @@ const topicApi={
         var url='topics'
         return axiosInstance.get(url,{params})
     },
+    getAllActive(){
+        var url='topics/active'
+        return axiosInstance.get(url,)
+    },
     get(id){
         var url='topics/'+id
         return axiosInstance.get(url)

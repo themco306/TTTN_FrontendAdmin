@@ -34,6 +34,8 @@ const validateCProduct = Yup.object({
       .min(0, "Giá bán không được nhỏ hơn 0"),
       selectedCategory: Yup.object()
     .required("Vui lòng chọn ít nhất một danh mục"), 
+    selectedBrand: Yup.object()
+    .required("Vui lòng chọn ít nhất một thương hiệu"), 
 
   });
   const validateCImage = Yup.object({

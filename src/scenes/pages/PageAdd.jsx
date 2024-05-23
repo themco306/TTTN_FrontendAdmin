@@ -12,6 +12,7 @@ import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
 import validatePage from "../../validate/validatePage";
+import TextEditor from "../../components/TextEditor";
 
 function PageAdd() {
   const handleException = useCustomException();
@@ -88,6 +89,11 @@ function PageAdd() {
         </label>
         <Dropdown value={status} onChange={(e) => setStatus(e.value)} options={StaticData.statusData} id="status"   optionLabel="name" placeholder="Chọn trạng thái" 
           style={{ width: "100%" }}/>
+      </div>
+      <div className="col-md-12 mb-3">
+        <TextEditor initData={detail} setData={setDetail}/>
+        <ShowValiMsg>{errors.detail}</ShowValiMsg>
+
       </div>
           <div
             className="col-md-12"

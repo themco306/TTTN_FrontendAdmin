@@ -3,6 +3,7 @@
 export const MenuActionTypes = {
     LIST_MENU: 'LIST_MENU',
     SET_MENU: 'SET_MENU',
+    ADD_MENU: 'ADD_MENU',
     UPDATE_MENU: 'UPDATE_MENU',
     UPDATE_STATUS_MENU:'UPDATE_STATUS_MENU',
     DELETE_MENU: 'DELETE_MENU',
@@ -16,6 +17,10 @@ export const MenuActionTypes = {
     }),
     setMenu: (item) => ({
       type: MenuActionTypes.SET_MENU,
+      payload: item,
+    }),
+    addMenu: (item) => ({
+      type: MenuActionTypes.ADD_MENU,
       payload: item,
     }),
     updateMenu: (item) => ({

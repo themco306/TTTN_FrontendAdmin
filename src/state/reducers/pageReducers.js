@@ -49,7 +49,11 @@ const pageReducers = (state = initialState, action) => {
         ...state,
         pages: state.pages.filter((i) => !action.payload.includes(i.id)),
       };
-
+      case PageActionTypes.CLEAR_PAGE:
+        return {
+          ...state,
+          page: {},
+        };
     default:
       return state;
   }

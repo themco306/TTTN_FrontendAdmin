@@ -1,6 +1,10 @@
 import axiosInstance from "./axiosInstance"
 const postApi={
-    getAll(params){
+    getAllPage(params){
+        var url='posts/page'
+        return axiosInstance.get(url,{params})
+    },
+    getAllPost(params){
         var url='posts'
         return axiosInstance.get(url,{params})
     },
@@ -13,6 +17,15 @@ const postApi={
         return axiosInstance.get(url)
     },
     addPage(data){
+        var url = 'posts/page';
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        };
+        return axiosInstance.post(url, data, config);
+    },
+    addPost(data){
         var url = 'posts';
         const config = {
             headers: {
@@ -38,7 +51,7 @@ const postApi={
         var url='posts/'+id
         return axiosInstance.delete(url)
     },
-    deleteSliders(data){
+    deletes(data){
         var url='posts/delete-multiple'
         return axiosInstance.delete(url,{data})
     }

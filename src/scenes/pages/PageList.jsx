@@ -22,17 +22,18 @@ function PageList() {
   const handleException = useCustomException();
   const pageData = useSelector((state) => state.pageReducers.pages);
   const [selectedPages, setSelectedPages] = useState([]);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     var response = await postApi.getAllPage();
-  //     console.log(response.data);
-  //     dispatch(pageActions.listPage(response.data));
-  //   };
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      var response = await postApi.getAllPage();
+      console.log(response.data);
+      dispatch(pageActions.listPage(response.data));
+    };
+    fetchData();
+  }, []);
   const handleChangeStatus = async (id) => {
     try {
       const response = await postApi.updateStatus(id);
+      console.log(response)
       if (response.status === 200) {
         dispatch(pageActions.updateStatusPage(id));
       }
@@ -78,7 +79,7 @@ function PageList() {
         ids: ids,
       };
       console.log(data);
-      let res = await postApi.deletePage(data);
+      let res = await postApi.deletes(data);
       console.log(res);
       if (res.status === 200) {
         const updatedSelected = selectedPages.filter(
@@ -159,35 +160,38 @@ function PageList() {
   headerStyle={{ width: "5%" }}
   sortable
   header="Mã"
-  body={(rowData) => rowData.id.slice(9, 13)} 
+  body={(rowData) => rowData.id} 
   sortField="id" // Sử dụng sortField để chỉ định trường dữ liệu sẽ được sắp xếp
 
 ></Column>
-
           <Column
-            headerStyle={{ width: "15%" }}
-            header="Ảnh"
-            // body={(rowData) => (
-            //   <Image src={rowData.avatar&&(appUrl.avatarURL+rowData.avatar)} />
-            // )}
+            headerStyle={{ width: "20%" }}
+            sortable
+            header="Tên trang đơn"
+            field='name'
           ></Column>
           <Column
             headerStyle={{ width: "20%" }}
             sortable
-            sortField="firstName" 
-            header="Họ&Tên"
-            body={(rowData)=>(
-              <span>{rowData.firstName +' '+rowData.lastName}</span>
-            )}
+            header="Slug"
+            field='slug'
+          ></Column>
+                    <Column
+            headerStyle={{ width: "20%" }}
+            sortable
+            header="Ngày tạo"
+            sortField='createdAt'
+            body={(rowData)=>(<span>{new Date(rowData.createdAt).toLocaleString()}</span>)}
           ></Column>
                     <Column
             headerStyle={{ width: "5%" }}
             sortable
             sortField="status" 
-            header="Xác thực Email"
+            header="Hiển thị"
             body={(rowData)=>(
               <InputSwitch
-              checked={rowData.status}
+              checked={rowData.status===1?true:false}
+
               onChange={() => handleChangeStatus(rowData.id)}
             />
             )}

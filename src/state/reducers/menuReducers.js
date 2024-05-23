@@ -24,6 +24,11 @@ const menuReducers = (state = initialState, action) => {
           ...state,
           menus: action.payload,
         };
+        case MenuActionTypes.ADD_MENU:
+          return {
+            ...state,
+            menus: [action.payload,...state.menus],
+          };
     case MenuActionTypes.UPDATE_MENU:
       const updated = state.menus.map(data =>
         data.id === action.payload.id ? action.payload : data

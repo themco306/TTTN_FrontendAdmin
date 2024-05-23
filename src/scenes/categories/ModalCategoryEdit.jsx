@@ -175,7 +175,7 @@ function ModalCategoryEdit({ categoryId }) {
           </div>
           <div className="col-md-4">
         <label htmlFor="description" style={{ display: "block" }}>
-            Danh mục cha:
+            Trạng thái:
           </label>
           <Dropdown value={status} onChange={(e) => setStatus(e.value)} options={StaticData.statusData}   optionLabel="name" placeholder="Chọn cấp cha" 
             style={{ width: "100%" }}/>

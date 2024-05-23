@@ -24,6 +24,9 @@ import { toast } from "react-toastify";
 import { validateCImage, validateCProduct } from "../../validate/validateProduct";
 import ShowValiMsg from "../../validate/ShowValiMsg";
 import { Checkbox } from "primereact/checkbox";
+import TextEditor from "../../components/TextEditor";
+import brandApi from "../../api/brandApi";
+import { brandActions } from "../../state/actions/brandActions";
 
 function ProductAdd() {
   const stepperRef = useRef(null);
@@ -41,6 +44,7 @@ function ProductAdd() {
   const [salePrice, setSalePrice] = useState(0);
   const [status, setStatus] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedBrand, setSelectedBrand] = useState(null);
   const [images, setImages] = useState([]);
   const [errors,setErrors]=useState({})
   const [comeBack,setComeBack]=useState(true);
@@ -52,12 +56,30 @@ function ProductAdd() {
   const categoryData = useSelector(
     (state) => state.categoryReducers.categories
   );
+  const brandData = useSelector(
+    (state) => state.brandReducers.brands
+  );
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await categoryApi.getAll();
         console.log(response.data);
         dispatch(categoryActions.listCategory(response.data));
+      } catch (error) {
+        if(error.response?.status){
+          handleException(error)
+
+        }
+      }
+    };
+    fetchData();
+  }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await brandApi.getAll();
+        console.log(response.data);
+        dispatch(brandActions.listBrand(response.data));
       } catch (error) {
         if(error.response?.status){
           handleException(error)
@@ -89,7 +111,7 @@ function ProductAdd() {
   };
   const handleNext=async()=>{
     try{
-      await validateCProduct.validate({name,description,detail,quantity,buyingPrice,comparePrice,salePrice,selectedCategory},{abortEarly:false})
+      await validateCProduct.validate({name,description,detail,quantity,buyingPrice,comparePrice,salePrice,selectedCategory,selectedBrand},{abortEarly:false})
       stepperRef.current.nextCallback();
     }catch(error){
       const newError = {};
@@ -115,6 +137,7 @@ function ProductAdd() {
         productType: "string",
         note: "string",
         categoryId: selectedCategory?.id ?? null,
+        brandId: selectedBrand?.id ?? null,
         createdById: id,
         updatedById: id,
       };
@@ -191,15 +214,8 @@ function ProductAdd() {
                     <label htmlFor="name" style={{ display: "block" }}>
                       Mô tả chi tiết:
                     </label>
-                    <Editor
-                    
-                      value={"Hello!"}
-                      onTextChange={(e) => setDetail(e.htmlValue)}
-                      style={{ height: "320px" }}
-                    />
+                    <TextEditor initData={detail} setData={setDetail}/>
                     <ShowValiMsg>{errors.detail}</ShowValiMsg>
-
-                    <span>{detail}</span>
                   </div>
                 </div>
                 <div className="  col-md-4">
@@ -265,6 +281,21 @@ function ProductAdd() {
                       style={{ width: "100%" }}
                     />
                     <ShowValiMsg>{errors.selectedCategory}</ShowValiMsg>
+                  </div>
+                  <div className="col-md-12">
+                    <label htmlFor="brand" style={{ display: "block" }}>
+                      Thương hiệu:
+                    </label>
+                    <Dropdown
+                      value={selectedBrand}
+                      onChange={(e) => setSelectedBrand(e.value)}
+                      options={brandData}
+                      id="brand"
+                      optionLabel="name"
+                      placeholder="Chọn thương hiệu"
+                      style={{ width: "100%" }}
+                    />
+                    <ShowValiMsg>{errors.selectedBrand}</ShowValiMsg>
                   </div>
                   <div className="col-md-12">
                     <label htmlFor="status" style={{ display: "block" }}>

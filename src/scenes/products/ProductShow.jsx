@@ -9,6 +9,7 @@ import { Galleria } from "primereact/galleria";
 import appUrl from "../../api/appUrl";
 import { PrimeIcons } from "primereact/api";
 import { Button } from "primereact/button";
+import { ScrollPanel } from "primereact/scrollpanel";
 
 function ProductShow() {
   const navigate = useNavigate();
@@ -73,7 +74,7 @@ function ProductShow() {
       <ContentMain>
         {productData && (
           <div className="row">
-            <div className="col-md-7">
+            <div className="col-md-4">
               <p>
                 <strong>Tên:</strong> {productData.name}
               </p>
@@ -82,6 +83,9 @@ function ProductShow() {
               </p>
               <p>
                 <strong>Danh mục:</strong> {productData.category?.name}
+              </p>
+              <p>
+                <strong>Thương hiệu:</strong> {productData.brand?.name}
               </p>
               <p>
                 <strong>Số lượng:</strong> {productData.quantity}
@@ -97,13 +101,6 @@ function ProductShow() {
               </p>
               <p>
                 <strong>Mô tả:</strong> {productData.description}
-              </p>
-              <p>
-                <strong>Chi tiết:</strong>{" "}
-                <div
-                  style={{ display: "inline-block", margin: 0 }}
-                  dangerouslySetInnerHTML={{ __html: productData.detail }}
-                ></div>
               </p>
               <p>
                 <strong>Trạng thái:</strong>{" "}
@@ -125,7 +122,12 @@ function ProductShow() {
                 {productData.updatedBy?.userName}
               </p>
             </div>
-            <div className="col-md-5">
+            <div className="col-md-4">
+            <ScrollPanel style={{ width: '100%', height: '500px' }}>
+                <div dangerouslySetInnerHTML={{ __html: productData.description }}></div>
+            </ScrollPanel>
+            </div>
+            <div className="col-md-4">
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
                 <Button
                   icon={PrimeIcons.USER_EDIT}
