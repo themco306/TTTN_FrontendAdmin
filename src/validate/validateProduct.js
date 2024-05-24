@@ -6,13 +6,13 @@ const validateCProduct = Yup.object({
     name: Yup.string()
       .required("Tên là bắt buộc")
       .min(2, "Tên phải có ít nhất 2 ký tự")
-      .max(50, "Tên không được vượt quá 50 ký tự"),
+      .max(200, "Tên không được vượt quá 200 ký tự"),
     description: Yup.string()
       .required("Mô tả là bắt buộc")
-      .max(255, "Mô tả không được vượt quá 255 ký tự"),
+      .max(2000, "Mô tả không được vượt quá 2000 ký tự"),
     detail: Yup.string()
     .required("Chi tiết là bắt buộc")
-      .max(500, "Chi tiết không được vượt quá 500 ký tự"),
+      .max(5000, "Chi tiết không được vượt quá 5000 ký tự"),
     quantity: Yup.number()
     .required("Số lượng là bắt buộc")
       .typeError("Số lượng phải là một số")

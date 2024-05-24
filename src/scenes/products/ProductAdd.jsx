@@ -157,6 +157,8 @@ function ProductAdd() {
       }
     } catch (error) {
       console.log(error)
+
+      setLoadingAdd(false);
       if(error.response?.status){
         handleException(error)
       }else{
@@ -166,7 +168,6 @@ function ProductAdd() {
       });
       console.log(newError)
       setErrors(newError);
-      setLoadingAdd(false);
       }
     }
   };

@@ -53,6 +53,8 @@ import PageShow from "./scenes/pages/PageShow";
 import PostAdd from "./scenes/posts/PostAdd";
 import PostEdit from "./scenes/posts/PostEdit";
 import PostShow from "./scenes/posts/PostShow";
+import MenuEdit from "./scenes/menus/MenuEdit";
+import MenuShow from "./scenes/menus/MenuShow";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
@@ -349,6 +351,28 @@ const router = createBrowserRouter([
             claimValue={ClaimValue.Show}
           >
             <MenuList />
+          </ClaimProtectedRoute>
+        ),
+      },
+      {
+        path: "menu/edit",
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.SliderClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <MenuEdit />
+          </ClaimProtectedRoute>
+        ),
+      },
+      {
+        path: "menu/show",
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.SliderClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <MenuShow />
           </ClaimProtectedRoute>
         ),
       },

@@ -8,6 +8,10 @@ const menuApi={
         var url='menus/'+id
         return axiosInstance.get(url,{params})
     },
+    getParents(id){
+        var url='menus/parent/'+id
+        return axiosInstance.get(url)
+    },
     add(data){
         var url='menus'
         return axiosInstance.post(url,data)
