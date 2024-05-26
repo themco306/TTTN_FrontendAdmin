@@ -158,7 +158,7 @@ function OrderEdit() {
             <p>Ngày đặt: {new Date(order.createdAt).toLocaleString()}</p>
             <p>Hình thức thanh toán: {order.paymentType==="OnlinePayment"? "Thanh toán online":"Thanh toán khi nhận hàng"}</p>
             <p>Giá tiền: {order.total.toLocaleString()} VND</p>
-            <div>Trạng thái: <OrderStatus
+            <div >Trạng thái: <OrderStatus
                   data={getStatusText(order.status,order.paymentType)}
                   id={order.id}
                 /></div>

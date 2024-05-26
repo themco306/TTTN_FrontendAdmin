@@ -24,6 +24,7 @@ import useCustomException from "../../helpers/useCustomException";
 import ShowValiMsg from "../../validate/ShowValiMsg";
 import brandApi from "../../api/brandApi";
 import postApi from "../../api/postApi";
+import topicApi from "../../api/topicApi";
 
 function MenuList() {
   const getType = (type) => {
@@ -88,7 +89,7 @@ function MenuList() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await postApi.getAllPost();
+        const response = await topicApi.getAllActive();
         console.log(response.data);
         setPostData(response.data);
       } catch (error) {}
@@ -363,7 +364,7 @@ function MenuList() {
                   </div>
                 </div>
               </AccordionTab>
-              <AccordionTab header="Bài viết">
+              <AccordionTab header="Chủ đề bài viết">
                 <div className="row">
                   {postData.length > 0 &&
                     postData.map((item) => (
@@ -383,7 +384,7 @@ function MenuList() {
                   <div className="col-md-12 mt-2">
                     <Button
                       loading={loading}
-                      onClick={() => handleAdd("post")}
+                      onClick={() => handleAdd("topic")}
                       style={{ width: "100%" }}
                       label="Thêm"
                       severity="success"

@@ -48,6 +48,9 @@ function MenuShow() {
               <strong>Cấp cha:</strong> {pageData.parent?.name}
             </p>
             <p>
+              <strong>Vị trí:</strong> {pageData.sortOrder}
+            </p>
+            <p>
               <strong>Trạng thái:</strong>{" "}
               {pageData.status===1 ? "Hiển thị" : "Ẩn"}
             </p>

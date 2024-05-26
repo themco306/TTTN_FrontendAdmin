@@ -166,14 +166,14 @@ function ModalTopicEdit({topicId}) {
           </div>
           <div className="col-md-5">
         <label htmlFor="description" style={{ display: "block" }}>
-            Chủ đề cha:
+            Trạng thái:
           </label>
           <Dropdown value={status} onChange={(e) => setStatus(e.value)} options={StaticData.statusData}   optionLabel="name" placeholder="Chọn cấp cha" 
             style={{ width: "100%" }}/>
         </div>
         <div className="col-md-7">
             <label htmlFor="description" style={{ display: "block" }}>
-              Danh mục cha:
+            Chủ đề cha:
             </label>
             <Dropdown
               value={selectedTopic}
@@ -185,6 +185,7 @@ function ModalTopicEdit({topicId}) {
               optionLabel="name"
               placeholder="Chọn cấp cha"
               style={{ width: "100%" }}
+              filter
             />
           </div>
         </div>

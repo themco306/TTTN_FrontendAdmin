@@ -1,6 +1,7 @@
 import React from 'react'
 import { useAuth } from '../auth/AuthContext'
-import { useSelector } from 'react-redux';
+import {Button} from 'primereact/button'
+import { Link } from 'react-router-dom';
 
 function Header() {
   const {logoutContext}=useAuth()
@@ -16,10 +17,10 @@ function Header() {
       <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars" /></a>
     </li>
     <li className="nav-item d-none d-sm-inline-block">
-      <a href="index3.html" className="nav-link">Home</a>
+      <Link to="/" className="nav-link">Trang chủ</Link>
     </li>
     <li className="nav-item d-none d-sm-inline-block">
-      <button onClick={handleLogout} className="nav-link">Logout</button>
+      <Button severity='danger' text raised onClick={handleLogout} className="nav-link">Đăng xuất</Button>
     </li>
   </ul>
   {/* Right navbar links */}

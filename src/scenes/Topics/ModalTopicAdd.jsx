@@ -131,7 +131,7 @@ function ModalTopicAdd() {
         <label htmlFor="cate" style={{ display: "block" }}>
           Chủ đề cha:
         </label>
-        <Dropdown value={selectedTopic} onChange={(e) => setSelectedTopic(e.value)} options={[{name: 'Không có', value: null}, ...topicData]} id="cate"   optionLabel="name" placeholder="Chọn cấp cha" 
+        <Dropdown value={selectedTopic} onChange={(e) => setSelectedTopic(e.value)} options={[{name: 'Không có', value: null}, ...topicData]} id="cate"   optionLabel="name" placeholder="Chọn cấp cha"  filter
           style={{ width: "100%" }}/>
       </div>
       </div>

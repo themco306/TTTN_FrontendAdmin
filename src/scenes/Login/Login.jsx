@@ -13,6 +13,7 @@ function Login() {
   const handleException = useCustomException();
   const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe,setRememberMe]=useState(false)
 
   const handleLogin = async (userData) => {
     try {
@@ -37,7 +38,7 @@ function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    handleLogin({ emailOrUsername, password });
+    handleLogin({ emailOrUsername, password,rememberMe });
   };
   return (
     <><ToastContainer />
@@ -87,24 +88,20 @@ function Login() {
         </div>
         {/* 2 column grid layout for inline styling */}
         <div className="row mb-4">
-          <div className="col d-flex justify-content-center">
+          <div className="col-12 d-flex justify-content-center">
             {/* Checkbox */}
             <div className="form-check">
               <input
                 className="form-check-input"
                 type="checkbox"
-                defaultValue
                 id="form2Example31"
-                defaultChecked
+                checked={rememberMe}
+                onChange={()=>setRememberMe(!rememberMe)}
               />
               <label className="form-check-label" htmlFor="form2Example31">
-                Lưu đăng nhập{" "}
+                Lưu đăng nhập trong 30 ngày
               </label>
             </div>
-          </div>
-          <div className="col">
-            {/* Simple link */}
-            <a href="#!">Quên mật khẩu?</a>
           </div>
         </div>
         <button

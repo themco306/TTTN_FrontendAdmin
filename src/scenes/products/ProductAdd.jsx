@@ -280,6 +280,7 @@ function ProductAdd() {
                       optionLabel="name"
                       placeholder="Chọn danh mục"
                       style={{ width: "100%" }}
+                      filter
                     />
                     <ShowValiMsg>{errors.selectedCategory}</ShowValiMsg>
                   </div>
@@ -295,6 +296,7 @@ function ProductAdd() {
                       optionLabel="name"
                       placeholder="Chọn thương hiệu"
                       style={{ width: "100%" }}
+                      filter
                     />
                     <ShowValiMsg>{errors.selectedBrand}</ShowValiMsg>
                   </div>

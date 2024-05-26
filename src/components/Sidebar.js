@@ -9,6 +9,7 @@ function Sidebar() {
   const { user } = useSelector(state => state.authReducer);
   const menuData=[
     {
+      
       title:"Sản phẩm",
       icon:"pi pi-objects-column",
       items:[
@@ -205,6 +206,14 @@ function Sidebar() {
                   data-accordion="false"
                   style={{ height:1000 }}
                 >
+                  <li className="nav-item">
+      <Link to={"/"}  className="nav-link ">
+        <i className={"pi pi-home"}  />
+        <p style={{ marginLeft:5 ,userSelect:'none'}}>
+          Trang chủ
+        </p>
+      </Link>
+      </li>
                 {menuData.map((data)=>(
                   <MenuItems key={data.title} title={data.title}  items={data.items} claims={user.claims} roles={user.roles} icon={data.icon}/>
                 ))}

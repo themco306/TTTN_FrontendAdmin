@@ -210,6 +210,7 @@ function ModalCategoryEdit({ categoryId }) {
               optionLabel="name"
               placeholder="Chọn cấp cha"
               style={{ width: "100%" }}
+              filter
             />
           </div>
         </div>

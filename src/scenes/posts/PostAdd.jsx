@@ -131,7 +131,7 @@ function PostAdd() {
           Chủ đề:
         </label>
         <Dropdown value={selectedTopic} onChange={(e) => setSelectedTopic(e.value)} options={[{name: 'Không có', value: null}, ...topicData]} id="cate"   optionLabel="name" placeholder="Chọn chủ đề" 
-          style={{ width: "100%" }}/>
+          style={{ width: "100%" }} filter/>
       </div>
     <div className="col-md-7 mb-2">
             <label htmlFor="avatar" style={{ display: "block" }}>

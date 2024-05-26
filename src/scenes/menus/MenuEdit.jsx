@@ -192,6 +192,7 @@ function MenuEdit() {
               optionLabel="name"
               placeholder="Chọn cấp cha"
               style={{ width: "100%" }}
+              filter
             />
           </div>
           <div className="col-md-6">

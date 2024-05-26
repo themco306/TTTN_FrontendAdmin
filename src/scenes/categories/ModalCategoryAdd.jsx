@@ -156,7 +156,7 @@ function ModalCategoryAdd() {
           <label htmlFor="cate" style={{ display: "block" }}>
             Danh mục cha:
           </label>
-          <Dropdown value={selectedCategory} onChange={(e) => setSelectedCategory(e.value)} options={[{name: 'Không có', value: null}, ...categoryData]} id="cate"   optionLabel="name" placeholder="Chọn cấp cha" 
+          <Dropdown value={selectedCategory} onChange={(e) => setSelectedCategory(e.value)} options={[{name: 'Không có', value: null}, ...categoryData]} id="cate"   optionLabel="name" placeholder="Chọn cấp cha" filter
             style={{ width: "100%" }}/>
         </div>
         </div>
