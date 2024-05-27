@@ -18,7 +18,7 @@ import { toast } from 'react-toastify'
 import { confirmPopup } from 'primereact/confirmpopup'
 import useCustomException from '../../helpers/useCustomException'
 
-function UserList() {
+function CustomerList() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const handleException = useCustomException();
@@ -27,7 +27,7 @@ function UserList() {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          var response = await userApi.getAll();
+          var response = await userApi.getAllCustomer();
           console.log(response.data);
           dispatch(userActions.listUser(response.data));
         } catch (error) {
@@ -58,10 +58,10 @@ function UserList() {
           toast.success(`Xóa thành công ID: ${userId}`);
         }
         return;
-      } catch (error) {
-        if (error.response?.status) {
-          handleException(error);
-        }
+      } catch (err) {
+        console.log(err);
+        toast.error("Không thể xóa bản ghi này!");
+        return;
       }
     };
   
@@ -96,10 +96,11 @@ function UserList() {
           toast.success(`Xóa thành công ID: ${ids}`);
         }
         return;
-      } catch (error) {
-        if (error.response?.status) {
-          handleException(error);
-        }
+      } catch (err) {
+        console.log(err);
+  
+        toast.error("Không thể xóa bản ghi này!");
+        return;
       }
     };
   
@@ -122,7 +123,7 @@ function UserList() {
   return (
     <>
     <ConfirmDialog />
-    <ContentHeader currentPage={"Quản trị viên"} previousPage={"Trang chủ"} />
+    <ContentHeader currentPage={"Khách hàng"} previousPage={"Trang chủ"} />
     <ContentMain>
       <div className="card">
         <div className="row  flex justify-content-between  mb-4">
@@ -259,4 +260,4 @@ function UserList() {
   )
 }
 
-export default UserList
+export default CustomerList

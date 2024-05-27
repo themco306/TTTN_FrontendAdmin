@@ -45,6 +45,18 @@ function Sidebar() {
         path: "user",
         claimType:ClaimType.UserClaim,
         claimValue:ClaimValue.Show
+      },
+      {
+        title:"Khách hàng",
+        path: "customer",
+        claimType:ClaimType.UserClaim,
+        claimValue:ClaimValue.Show
+      },
+      {
+        title:"Liên hệ",
+        path: "contact",
+        claimType:ClaimType.ContactClaim,
+        claimValue:ClaimValue.Show
       }
     ]
     },
@@ -60,20 +72,20 @@ function Sidebar() {
       },      {
         title:"Vị trí sản phẩm",
         path:"tag",
-        claimType:ClaimType.ProductClaim,
+        claimType:ClaimType.TagClaim,
         claimValue:ClaimValue.Show
 
       }
       ,      {
         title:"Thông tin website",
         path:"web-info",
-        claimType:ClaimType.ProductClaim,
+        claimType:ClaimType.WebInfoClaim,
         claimValue:ClaimValue.Show
       }
       ,      {
         title:"Quản lý Menu",
         path:"menu",
-        claimType:ClaimType.ProductClaim,
+        claimType:ClaimType.MenuClaim,
         claimValue:ClaimValue.Show
       }
     ]
@@ -85,14 +97,14 @@ function Sidebar() {
         {
         title:"Danh sách đơn hàng",
         path: "order",
-        claimType:"",
-        claimValue:""
+        claimType:ClaimType.OrderClaim,
+        claimValue:ClaimValue.Show
       },
       {
         title:"Danh sách mã giảm giá",
         path: "coupon",
-        claimType:"",
-        claimValue:""
+        claimType:ClaimType.CouponClaim,
+        claimValue:ClaimValue.Show
       },
       
     ]
@@ -104,19 +116,19 @@ function Sidebar() {
         {
         title:"Chủ đề ",
         path: "topic",
-        claimType:ClaimType.SliderClaim,
+        claimType:ClaimType.TopicClaim,
         claimValue:ClaimValue.Show
       },      {
         title:"Bài viết",
         path:"post",
-        claimType:ClaimType.ProductClaim,
+        claimType:ClaimType.PostClaim,
         claimValue:ClaimValue.Show
 
       }
       ,      {
         title:"Trang đơn",
         path:"page",
-        claimType:ClaimType.ProductClaim,
+        claimType:ClaimType.PostClaim,
         claimValue:ClaimValue.Show
       }
     ]

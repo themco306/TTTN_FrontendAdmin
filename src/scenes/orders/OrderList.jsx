@@ -84,9 +84,14 @@ function OrderList() {
 
   useEffect(() => {
     const fetchData = async () => {
-      var response = await orderApi.getAll();
-      console.log(response);
-      dispatch(orderActions.listOrder(response.data));
+      try {
+        var response = await orderApi.getAll();
+        console.log(response);
+        dispatch(orderActions.listOrder(response.data));
+      } catch (error) {
+        console.log(error)
+      }
+     
     };
     fetchData();
   }, []);

@@ -24,9 +24,14 @@ function PageList() {
   const [selectedPages, setSelectedPages] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      var response = await postApi.getAllPage();
-      console.log(response.data);
-      dispatch(pageActions.listPage(response.data));
+      try {
+        var response = await postApi.getAllPage();
+        console.log(response.data);
+        dispatch(pageActions.listPage(response.data));
+      } catch (error) {
+        console.log(error)
+      }
+     
     };
     fetchData();
   }, []);

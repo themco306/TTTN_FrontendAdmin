@@ -16,8 +16,16 @@ export const userApi = {
         var url='account'
         return axiosInstance.get(url,{params})
     },
+    getAllCustomer(params){
+        var url='account/customer'
+        return axiosInstance.get(url,{params})
+    },
     get(id){
         var url='account/'+id
+        return axiosInstance.get(url)
+    },
+    getMe(){
+        var url='account/myEdit'
         return axiosInstance.get(url)
     },
     getRoles(){

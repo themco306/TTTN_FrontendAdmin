@@ -60,9 +60,14 @@ function MenuList() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await menuApi.getAll();
-      console.log(response);
-      dispatch(menuActions.listMenu(response.data));
+      try {
+        const response = await menuApi.getAll();
+        console.log(response);
+        dispatch(menuActions.listMenu(response.data));
+      } catch (error) {
+        console.log(error)
+      }
+    
     };
     fetchData();
   }, []);

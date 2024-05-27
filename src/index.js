@@ -55,6 +55,9 @@ import PostEdit from "./scenes/posts/PostEdit";
 import PostShow from "./scenes/posts/PostShow";
 import MenuEdit from "./scenes/menus/MenuEdit";
 import MenuShow from "./scenes/menus/MenuShow";
+import ContactList from "./scenes/contacts/ContactList";
+import ContactEdit from "./scenes/contacts/ContactEdit";
+import CustomerList from "./scenes/customer/CustomerList";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
@@ -163,10 +166,21 @@ const router = createBrowserRouter([
         element: <UserMyEdit />,
       },
       {
+        path: "customer",
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.UserClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <CustomerList />
+          </ClaimProtectedRoute>
+        ),
+      },
+      {
         path: "order",
         element: (
           <ClaimProtectedRoute
-            claimType={ClaimType.ProductClaim}
+            claimType={ClaimType.OrderClaim}
             claimValue={ClaimValue.Show}
           >
             <OrderList />
@@ -177,7 +191,7 @@ const router = createBrowserRouter([
         path: "order/edit",
         element: (
           <ClaimProtectedRoute
-            claimType={ClaimType.ProductClaim}
+            claimType={ClaimType.OrderClaim}
             claimValue={ClaimValue.Edit}
           >
             <OrderEdit />
@@ -186,19 +200,43 @@ const router = createBrowserRouter([
       },
       {
         path: "coupon",
-        element: <CouponList />,
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.CouponClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <CouponList />
+          </ClaimProtectedRoute>
+        ),
       },
       {
         path: "coupon/create",
-        element: <CouponAdd />,
+        element: 
+        <ClaimProtectedRoute
+        claimType={ClaimType.CouponClaim}
+        claimValue={ClaimValue.Add}
+      >
+         <CouponAdd />
+      </ClaimProtectedRoute>
+       ,
       },
       {
         path: "coupon/edit",
-        element: <CouponEdit />,
+        element:  <ClaimProtectedRoute
+        claimType={ClaimType.CouponClaim}
+        claimValue={ClaimValue.Edit}
+      >
+        <CouponEdit />
+      </ClaimProtectedRoute>,
       },
       {
         path: "coupon/show",
-        element: <CouponShow />,
+        element:  <ClaimProtectedRoute
+        claimType={ClaimType.CouponClaim}
+        claimValue={ClaimValue.Show}
+      >
+        <CouponShow />
+      </ClaimProtectedRoute>,
       },
       {
         path: "category",
@@ -215,7 +253,7 @@ const router = createBrowserRouter([
         path: "topic",
         element: (
           <ClaimProtectedRoute
-            claimType={ClaimType.CategoryClaim}
+            claimType={ClaimType.TopicClaim}
             claimValue={ClaimValue.Show}
           >
             <TopicList />
@@ -223,10 +261,32 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "contact",
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.ContactClaim}
+            claimValue={ClaimValue.Show}
+          >
+            <ContactList />
+          </ClaimProtectedRoute>
+        ),
+      },
+      {
+        path: "contact/edit",
+        element: (
+          <ClaimProtectedRoute
+            claimType={ClaimType.ContactClaim}
+            claimValue={ClaimValue.Edit}
+          >
+            <ContactEdit />
+          </ClaimProtectedRoute>
+        ),
+      },
+      {
         path: "page",
         element: (
           <ClaimProtectedRoute
-            claimType={ClaimType.CategoryClaim}
+            claimType={ClaimType.PostClaim}
             claimValue={ClaimValue.Show}
           >
             <PageList />
@@ -237,8 +297,8 @@ const router = createBrowserRouter([
         path: "page/create",
         element: (
           <ClaimProtectedRoute
-            claimType={ClaimType.CategoryClaim}
-            claimValue={ClaimValue.Show}
+            claimType={ClaimType.PostClaim}
+            claimValue={ClaimValue.Add}
           >
             <PageAdd />
           </ClaimProtectedRoute>
@@ -248,8 +308,8 @@ const router = createBrowserRouter([
         path: "page/edit",
         element: (
           <ClaimProtectedRoute
-            claimType={ClaimType.CategoryClaim}
-            claimValue={ClaimValue.Show}
+            claimType={ClaimType.PostClaim}
+            claimValue={ClaimValue.Edit}
           >
             <PageEdit />
           </ClaimProtectedRoute>
@@ -259,7 +319,7 @@ const router = createBrowserRouter([
         path: "page/show",
         element: (
           <ClaimProtectedRoute
-            claimType={ClaimType.CategoryClaim}
+            claimType={ClaimType.PostClaim}
             claimValue={ClaimValue.Show}
           >
             <PageShow />
@@ -270,7 +330,7 @@ const router = createBrowserRouter([
         path: "post",
         element: (
           <ClaimProtectedRoute
-            claimType={ClaimType.CategoryClaim}
+            claimType={ClaimType.PostClaim}
             claimValue={ClaimValue.Show}
           >
             <PostList />
@@ -281,8 +341,8 @@ const router = createBrowserRouter([
         path: "post/create",
         element: (
           <ClaimProtectedRoute
-            claimType={ClaimType.CategoryClaim}
-            claimValue={ClaimValue.Show}
+            claimType={ClaimType.PostClaim}
+            claimValue={ClaimValue.Add}
           >
             <PostAdd />
           </ClaimProtectedRoute>
@@ -292,8 +352,8 @@ const router = createBrowserRouter([
         path: "post/edit",
         element: (
           <ClaimProtectedRoute
-            claimType={ClaimType.CategoryClaim}
-            claimValue={ClaimValue.Show}
+            claimType={ClaimType.PostClaim}
+            claimValue={ClaimValue.Edit}
           >
             <PostEdit />
           </ClaimProtectedRoute>
@@ -303,7 +363,7 @@ const router = createBrowserRouter([
         path: "post/show",
         element: (
           <ClaimProtectedRoute
-            claimType={ClaimType.CategoryClaim}
+            claimType={ClaimType.PostClaim}
             claimValue={ClaimValue.Show}
           >
             <PostShow />
@@ -325,7 +385,7 @@ const router = createBrowserRouter([
         path: "tag",
         element: (
           <ClaimProtectedRoute
-            claimType={ClaimType.SliderClaim}
+            claimType={ClaimType.TagClaim}
             claimValue={ClaimValue.Show}
           >
             <TagList />
@@ -336,7 +396,7 @@ const router = createBrowserRouter([
         path: "web-info",
         element: (
           <ClaimProtectedRoute
-            claimType={ClaimType.SliderClaim}
+            claimType={ClaimType.TagClaim}
             claimValue={ClaimValue.Show}
           >
             <WebInfoEdit />
@@ -347,7 +407,7 @@ const router = createBrowserRouter([
         path: "menu",
         element: (
           <ClaimProtectedRoute
-            claimType={ClaimType.SliderClaim}
+            claimType={ClaimType.MenuClaim}
             claimValue={ClaimValue.Show}
           >
             <MenuList />
@@ -358,8 +418,8 @@ const router = createBrowserRouter([
         path: "menu/edit",
         element: (
           <ClaimProtectedRoute
-            claimType={ClaimType.SliderClaim}
-            claimValue={ClaimValue.Show}
+            claimType={ClaimType.MenuClaim}
+            claimValue={ClaimValue.Edit}
           >
             <MenuEdit />
           </ClaimProtectedRoute>
@@ -369,7 +429,7 @@ const router = createBrowserRouter([
         path: "menu/show",
         element: (
           <ClaimProtectedRoute
-            claimType={ClaimType.SliderClaim}
+            claimType={ClaimType.MenuClaim}
             claimValue={ClaimValue.Show}
           >
             <MenuShow />
@@ -378,7 +438,10 @@ const router = createBrowserRouter([
       },
       {
         path: "brand",
-        element: <BrandList />,
+        element:  <ClaimProtectedRoute
+        claimType={ClaimType.BrandClaim}
+        claimValue={ClaimValue.Show}
+      > <BrandList /></ClaimProtectedRoute>,
       },
     ],
   },
@@ -409,7 +472,7 @@ const router = createBrowserRouter([
 ]);
 
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
       <AuthProvider>
         <RouterProvider router={router}>
@@ -417,7 +480,7 @@ root.render(
         </RouterProvider>
       </AuthProvider>
     </Provider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

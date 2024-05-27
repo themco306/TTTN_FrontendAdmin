@@ -14,19 +14,25 @@ import { confirmPopup } from "primereact/confirmpopup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { productActions } from "../../state/actions/productActions";
+import useCustomException from "../../helpers/useCustomException";
 
 function ProductList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const handleException = useCustomException();
   const productData = useSelector((state) => state.productReducers.products);
   // const [productData, setProductData] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      var response = await productApi.getAll();
-      console.log(response.data);
-      dispatch(productActions.listProduct(response.data));
+      try {
+        var response = await productApi.getAll();
+        console.log(response.data);
+        dispatch(productActions.listProduct(response.data));
+      } catch (error) {
+        console.log(error)
+      }
+     
     };
     fetchData();
   }, []);
@@ -39,10 +45,10 @@ function ProductList() {
         toast.success(`Xóa thành công ID: ${productId}`);
       }
       return;
-    } catch (err) {
-      console.log(err);
-      toast.error("Không thể xóa bản ghi này!");
-      return;
+    } catch (error) {
+      if (error.response?.status) {
+        handleException(error);
+      }
     }
   };
 
@@ -77,11 +83,10 @@ function ProductList() {
         toast.success(`Xóa thành công ID: ${ids}`);
       }
       return;
-    } catch (err) {
-      console.log(err);
-
-      toast.error("Không thể xóa bản ghi này!");
-      return;
+    } catch (error) {
+      if (error.response?.status) {
+        handleException(error);
+      }
     }
   };
 
@@ -108,8 +113,10 @@ function ProductList() {
         dispatch(productActions.updateProduct(response.data));
       }
       console.log(response);
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      if (error.response?.status) {
+        handleException(error);
+      }
     }
   };
   return (

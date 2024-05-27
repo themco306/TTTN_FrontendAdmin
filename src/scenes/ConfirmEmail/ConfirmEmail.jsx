@@ -23,6 +23,10 @@ function ConfirmEmail() {
         }
        
       }, [user,userId]);
+      useEffect(() => {
+        handleConfirm()
+       
+      }, [user,userId]);
       const handleConfirm=async ()=>{
         try {
             setLoading(true)

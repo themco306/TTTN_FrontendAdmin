@@ -147,20 +147,6 @@ function UserEdit() {
         },
         { abortEarly: false }
       );
-
-      const data = {
-        firstname,
-        lastname,
-        username,
-        email,
-        password,
-        confirmPassword,
-        phoneNumber,
-        gender,
-        avatar: avatar,
-        roles: selectedRoles,
-        claims: selectedRoles.includes(AppRole.Admin) ? claims : [],
-      };
       const formData = new FormData();
       formData.append("firstname", firstname);
       formData.append("lastname", lastname);

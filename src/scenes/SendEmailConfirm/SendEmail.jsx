@@ -4,17 +4,23 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import useCustomException from "../../helpers/useCustomException";
+import { useAuth } from "../../auth/AuthContext";
+import { Button } from "primereact/button";
 
 function SendEmail() {
   const navigate = useNavigate();
   const handleException = useCustomException();
+   const {logoutContext}=useAuth()
   const user = useSelector((state) => state.authReducer.user);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (user !== null && user.emailConfirmed) {
       navigate("/");
     }
-  }, [user]);
+    if(user===null){
+      navigate("/login")
+    }
+  }, [user,loading]);
 
   const handleSendMail = async () => {
     try {
@@ -65,6 +71,8 @@ function SendEmail() {
           )}{" "}
           để gửi liên kết về Email {user?.email}
         </p>
+        <div >Hoặc <Button disabled={loading} label="Đăng xuất" onClick={()=>{ setLoading(true); logoutContext();setLoading(false)}} text/> nếu Email này không phải của bạn</div>
+        
       </div>
     </div>
     </>

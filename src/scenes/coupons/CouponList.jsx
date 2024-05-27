@@ -21,9 +21,14 @@ function CouponList() {
     const [selectedCoupons, setSelectedCoupons] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
-          var response = await couponApi.getAll();
-          console.log(response.data);
-          dispatch(couponActions.listCoupon(response.data));
+          try {
+            var response = await couponApi.getAll();
+            console.log(response.data);
+            dispatch(couponActions.listCoupon(response.data));
+          } catch (error) {
+            console.log(error)
+          }
+        
         };
         fetchData();
       }, []);

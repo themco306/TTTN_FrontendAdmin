@@ -8,7 +8,7 @@ import { Button } from 'primereact/button';
 import { RadioButton } from 'primereact/radiobutton';
 import { toast } from 'react-toastify';
 import { userApi } from '../../api/userApi';
-import { validateUUser } from '../../validate/validateUser';
+import { validateUMUser } from '../../validate/validateUser';
 import { userActions } from '../../state/actions/userActions';
 import {  useNavigate } from 'react-router-dom';
 import useCustomException from '../../helpers/useCustomException';
@@ -43,7 +43,7 @@ function UserMyEdit() {
   useEffect(()=>{
     const fetchData =async()=>{
       try{
-        const res=await userApi.get(userId);
+        const res=await userApi.getMe();
         if(res.status===200){
           dispatch(userActions.setUser(res.data));
           setFirstname(res.data.firstName)
@@ -76,7 +76,7 @@ function UserMyEdit() {
     try{
         setLSubmit(true)
         
-          await validateUUser.validate({firstname,lastname,username,oldPassword,password,confirmPassword,email,phoneNumber},{abortEarly:false})
+          await validateUMUser.validate({firstname,lastname,username,oldPassword,password,confirmPassword,email,phoneNumber},{abortEarly:false})
         const formData = new FormData();
         formData.append('firstname', firstname);
         formData.append('lastname', lastname);
@@ -96,6 +96,9 @@ function UserMyEdit() {
             localStorage.setItem('user', JSON.stringify(response.data.data));
             setErrors({})
             setAvatar(null)
+            setOldPassword('')
+            setPassword('')
+            setConfirmPassword('')
            toast.success(response.data.message);
   
           
