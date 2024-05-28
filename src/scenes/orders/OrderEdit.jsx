@@ -82,13 +82,15 @@ function OrderEdit() {
     const dispatch=useDispatch()
     const [lFecth,setLFecth]=useState(false)
     const [order, setOrder] = useState(null);
+    const [couponU, setCouponU] = useState(null);
     useEffect(()=>{
         const fetchData =async()=>{
           try{
             setLFecth(true)
             const res=await orderApi.get(orderId);
             if(res.status===200){
-                setOrder(res.data)
+                setOrder(res.data.order)
+                setCouponU(res.data.couponUsage)
                 setLFecth(true)
               console.log(res.data)
             }
@@ -191,6 +193,7 @@ function OrderEdit() {
       </div>
       <div className="col-md-4">
         <h4>Khác</h4>
+        <p><strong>Mã giảm giá: </strong>{couponU??"Không có"}</p>
         {order?.paidOrder&&order?.paidOrder.paymentDate!==null&&(
             <p>Đã thanh toán qua: <strong>{order?.paidOrder.paymentMethod}</strong> vào lúc {new Date(order?.paidOrder.paymentDate).toLocaleString()}</p>
         )}
