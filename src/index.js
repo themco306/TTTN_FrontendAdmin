@@ -58,6 +58,7 @@ import MenuShow from "./scenes/menus/MenuShow";
 import ContactList from "./scenes/contacts/ContactList";
 import ContactEdit from "./scenes/contacts/ContactEdit";
 import CustomerList from "./scenes/customer/CustomerList";
+import SignalRComponent from "./signal/SignalRComponent";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
@@ -475,9 +476,15 @@ root.render(
   // <React.StrictMode>
     <Provider store={store}>
       <AuthProvider>
+      <SignalRComponent>
         <RouterProvider router={router}>
-          <PrimeReactProvider></PrimeReactProvider>
+          
+          <PrimeReactProvider>
+  
+          </PrimeReactProvider>
+          
         </RouterProvider>
+        </SignalRComponent>
       </AuthProvider>
     </Provider>
   // </React.StrictMode>
