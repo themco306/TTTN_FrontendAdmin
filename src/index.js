@@ -48,7 +48,6 @@ import PageList from "./scenes/pages/PageList";
 import PostList from "./scenes/posts/PostList";
 import PageAdd from "./scenes/pages/PageAdd";
 import PageEdit from "./scenes/pages/PageEdit";
-import { PageActionTypes } from "./state/actions/pageActions";
 import PageShow from "./scenes/pages/PageShow";
 import PostAdd from "./scenes/posts/PostAdd";
 import PostEdit from "./scenes/posts/PostEdit";

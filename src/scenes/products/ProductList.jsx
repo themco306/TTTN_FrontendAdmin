@@ -22,6 +22,7 @@ function ProductList() {
   const handleException = useCustomException();
   const productData = useSelector((state) => state.productReducers.products);
   // const [productData, setProductData] = useState([]);
+  const [filters, setFilters] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -156,6 +157,7 @@ function ProductList() {
             rows={5}
             rowsPerPageOptions={[5, 10, 25, 50]}
             tableStyle={{ minWidth: "50rem" }}
+           
           >
             <Column
               selectionMode="multiple"

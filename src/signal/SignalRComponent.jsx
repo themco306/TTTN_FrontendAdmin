@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import * as signalR from '@microsoft/signalr';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { signalrAction } from '../state/actions/signalrAction';
 
 const SignalRComponent = ({children}) => {
     const jwtToken = useSelector(state => state.authReducer.token);
-    const isLoggedIn = useSelector(state => state.authReducer.isLoggedIn); // Giả sử bạn có trạng thái isLoggedIn
+    const isLoggedIn = useSelector(state => state.authReducer.isLoggedIn);
+    const dispatch=useDispatch()
     const [connection, setConnection] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState(0);
 
@@ -31,14 +33,15 @@ const SignalRComponent = ({children}) => {
 
                     // Lắng nghe sự kiện từ server
                     connection.on("UserCountUpdated", message => {
-                        setOnlineUsers(message)
-                        console.log("Tin nhắn từ server:", message);
+                        console.log("trả vể",message)
+                        dispatch(signalrAction.setCUserOnline(message))
+                        
                     });
 
                     // Lấy số lượng người dùng trực tuyến
                     connection.invoke("GetOnlineUserCount")
                         .then(count => {
-                            setOnlineUsers(count);
+                            dispatch(signalrAction.setCUserOnline(count))
                         });
                 })
                 .catch(e => console.log("Kết nối thất bại: ", e));

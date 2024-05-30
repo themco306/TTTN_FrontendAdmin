@@ -11,6 +11,7 @@ import topicReducers from "./reducers/topicReducers";
 import pageReducers from "./reducers/pageReducers";
 import brandReducers from "./reducers/brandReducers";
 import contactReducers from "./reducers/contactReducers";
+import signalrReducers from "./reducers/signalrReducers";
 
 export default configureStore({
     reducer: {
@@ -25,6 +26,7 @@ export default configureStore({
         topicReducers,
         pageReducers,
         brandReducers,
-        contactReducers
+        contactReducers,
+        signalrReducers
     }
 })
