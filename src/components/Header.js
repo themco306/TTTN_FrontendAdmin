@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAuth } from '../auth/AuthContext'
 import {Button} from 'primereact/button'
 import { Link } from 'react-router-dom';
 
+import BoxSendMessage from './BoxSendMessage';
+import { useSelector } from 'react-redux';
+import appUrl from '../api/appUrl';
+import MessageItem from './MessageItem';
 function Header() {
+  const [showAllMessages, setShowAllMessages] = useState(false);
+  const [showMessages, setShowMessages] = useState(false);
+  const {messages}=useSelector(state => state.signalrReducers);
+  const [count,setCount]=useState(messages.filter(message => message.createdAt === message.updatedAt).length)
+  useEffect(()=>{
+    setCount(messages.filter(message => message.createdAt === message.updatedAt).length)
+  },[messages])
+
   const {logoutContext}=useAuth()
 
   const handleLogout =()=>{
@@ -19,9 +31,11 @@ function Header() {
     <li className="nav-item d-none d-sm-inline-block">
       <Link to="/" className="nav-link">Trang chủ</Link>
     </li>
-    <li className="nav-item d-none d-sm-inline-block">
-      <Button severity='danger' text raised onClick={handleLogout} className="nav-link">Đăng xuất</Button>
+    <li className="nav-item d-none d-sm-inline-block mr-2">
+      <Button severity='danger' text  onClick={handleLogout} className="nav-link">Đăng xuất</Button>
     </li>
+    <BoxSendMessage/>
+   
   </ul>
   {/* Right navbar links */}
   <ul className="navbar-nav ml-auto">
@@ -47,61 +61,33 @@ function Header() {
       </div>
     </li> */}
     {/* Messages Dropdown Menu */}
-    {/* <li className="nav-item dropdown">
-      <a className="nav-link" data-toggle="dropdown" href="#">
+    <li className="nav-item dropdown">
+      <a style={{ cursor:'pointer' }} className="nav-link" onClick={()=>setShowMessages(!showMessages)}>
         <i className="far fa-comments" />
-        <span className="badge badge-danger navbar-badge">3</span>
+        <span className="badge badge-danger navbar-badge">{ count}</span>
       </a>
-      <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-        <a href="#" className="dropdown-item">
-          <div className="media">
-            <img src="dist/img/user1-128x128.jpg" alt="User Avatar" className="img-size-50 mr-3 img-circle" />
-            <div className="media-body">
-              <h3 className="dropdown-item-title">
-                Brad Diesel
-                <span className="float-right text-sm text-danger"><i className="fas fa-star" /></span>
-              </h3>
-              <p className="text-sm">Call me whenever you can...</p>
-              <p className="text-sm text-muted"><i className="far fa-clock mr-1" /> 4 Hours Ago</p>
-            </div>
+      <div className={`dropdown-menu dropdown-menu-lg dropdown-menu-right ${showMessages ? 'show' : ''}`} style={{ maxHeight: "50vh", overflowY: 'auto' }}>
+            {/* Display only 4 messages initially */}
+            {!showAllMessages&&messages.slice(0, 4).map((item) => (
+              <MessageItem key={item.id} item={item} />
+            ))}
+            {/* Display "Xem tất cả" button */}
+            {!showAllMessages && (
+              <a style={{ cursor:'pointer' }}  className="dropdown-item dropdown-footer" onClick={() => setShowAllMessages(true)}>
+                Xem tất cả
+              </a>
+            )}
+            {/* If "Xem tất cả" button is clicked, display all messages */}
+            {showAllMessages && messages.map((item) => (
+              <MessageItem key={item.id} item={item} />
+            ))}
+             {showAllMessages && (
+              <a style={{ cursor:'pointer' }}  className="dropdown-item dropdown-footer" onClick={() => setShowAllMessages(false)}>
+                Thu gọn
+              </a>
+            )}
           </div>
-        </a>
-        <div className="dropdown-divider" />
-        <a href="#" className="dropdown-item">
-          
-          <div className="media">
-            <img src="dist/img/user8-128x128.jpg" alt="User Avatar" className="img-size-50 img-circle mr-3" />
-            <div className="media-body">
-              <h3 className="dropdown-item-title">
-                John Pierce
-                <span className="float-right text-sm text-muted"><i className="fas fa-star" /></span>
-              </h3>
-              <p className="text-sm">I got your message bro</p>
-              <p className="text-sm text-muted"><i className="far fa-clock mr-1" /> 4 Hours Ago</p>
-            </div>
-          </div>
-          
-        </a>
-        <div className="dropdown-divider" />
-        <a href="#" className="dropdown-item">
-          
-          <div className="media">
-            <img src="dist/img/user3-128x128.jpg" alt="User Avatar" className="img-size-50 img-circle mr-3" />
-            <div className="media-body">
-              <h3 className="dropdown-item-title">
-                Nora Silvester
-                <span className="float-right text-sm text-warning"><i className="fas fa-star" /></span>
-              </h3>
-              <p className="text-sm">The subject goes here</p>
-              <p className="text-sm text-muted"><i className="far fa-clock mr-1" /> 4 Hours Ago</p>
-            </div>
-          </div>
-          
-        </a>
-        <div className="dropdown-divider" />
-        <a href="#" className="dropdown-item dropdown-footer">See All Messages</a>
-      </div>
-    </li> */}
+    </li>
     {/* Notifications Dropdown Menu */}
     {/* <li className="nav-item dropdown">
       <a className="nav-link" data-toggle="dropdown" href="#">

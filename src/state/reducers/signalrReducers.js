@@ -9,7 +9,8 @@ import { SignalrActionTypes } from "../actions/signalrAction";
 const initialState = {
   adminOnline:0,
   customerOnline:0,
-
+  messages:[],
+  readMessages: [],
 };
 
 const signalrReducers = (state = initialState, action) => {
@@ -21,6 +22,16 @@ const signalrReducers = (state = initialState, action) => {
             customerOnline:action.payload.customerOnline,
 
         }
+        case SignalrActionTypes.SET_MESSAGE:
+          return{
+            ...state,
+            messages: [action.payload, ...state.messages]
+          }
+          case SignalrActionTypes.SET_READ_MESSAGES:
+            return {
+                ...state,
+                readMessages: action.payload,
+            };
     default:
       return state;
   }
