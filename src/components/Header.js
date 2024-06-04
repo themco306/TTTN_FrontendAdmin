@@ -73,7 +73,7 @@ function Header() {
             ))}
             {/* Display "Xem tất cả" button */}
             {!showAllMessages && (
-              <a style={{ cursor:'pointer' }}  className="dropdown-item dropdown-footer" onClick={() => setShowAllMessages(true)}>
+              <a style={{ cursor:'pointer',userSelect:"none" }}  className="dropdown-item dropdown-footer" onClick={() => setShowAllMessages(true)}>
                 Xem tất cả
               </a>
             )}
@@ -82,7 +82,7 @@ function Header() {
               <MessageItem key={item.id} item={item} />
             ))}
              {showAllMessages && (
-              <a style={{ cursor:'pointer' }}  className="dropdown-item dropdown-footer" onClick={() => setShowAllMessages(false)}>
+              <a style={{ cursor:'pointer',userSelect:"none" }}  className="dropdown-item dropdown-footer" onClick={() => setShowAllMessages(false)}>
                 Thu gọn
               </a>
             )}

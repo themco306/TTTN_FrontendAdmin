@@ -24,8 +24,11 @@ const dashboardApi={
     isRead(data){
         var url='notifications/is-read'
         return axiosInstance.post(url,data)
+    },
+    deleteMessage(id){
+        var url='notifications/messages/'+id
+        return axiosInstance.delete(url)
     }
-
     
 
 }

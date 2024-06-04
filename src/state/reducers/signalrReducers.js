@@ -32,6 +32,11 @@ const signalrReducers = (state = initialState, action) => {
                 ...state,
                 readMessages: action.payload,
             };
+            case SignalrActionTypes.DELETE_MESSAGE:
+              return {
+                ...state,
+                messages: state.messages.filter((message) => message.id !== action.payload),
+              };
     default:
       return state;
   }

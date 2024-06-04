@@ -37,6 +37,9 @@ const SignalRComponent = ({ children }) => {
                         console.log("Tin nhắn nhận được: ", message);
                         dispatch(signalrAction.setMessage(message))
                     });
+                    connection.on("MessageDeleted", (messageId) => {
+                        dispatch(signalrAction.deleteMessage(messageId));
+                      });
 
                     // Lấy số lượng người dùng trực tuyến
                     connection.invoke("GetOnlineUserCount")
