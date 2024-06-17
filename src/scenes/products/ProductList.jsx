@@ -15,28 +15,63 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { productActions } from "../../state/actions/productActions";
 import useCustomException from "../../helpers/useCustomException";
+import { Paginator } from "primereact/paginator";
+
+import { InputText } from "primereact/inputtext";
+import { Dropdown } from "primereact/dropdown";
+import { TriStateCheckbox } from "primereact/tristatecheckbox";
 
 function ProductList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleException = useCustomException();
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(5);
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const productData = useSelector((state) => state.productReducers.products);
   // const [productData, setProductData] = useState([]);
   const [filters, setFilters] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const [key, setKey] = useState("");
+  const [onS, setOnS] = useState(false);
+  const [selectOption, setSelectOption] = useState("");
+  const [show, setShow] = useState(null);
+  const options = [
+    { name: "Mặc định", value: "" },
+    { name: "Mới nhất", value: "create-asc" },
+    { name: "Cũ nhất", value: "create-desc" },
+    // { name: "Mới cập nhật", value: "update-desc" },
+  ];
   useEffect(() => {
     const fetchData = async () => {
       try {
-        var response = await productApi.getAll();
+        const params = {
+          key,
+          status:show === null ? null : show ? 1 : 0,
+          SortOrder:selectOption,
+          pageSize: rows,
+          pageNumber: currentPage,
+        };
+        console.log("pấm",params)
+        var response = await productApi.getAllPage(params);
         console.log(response.data);
-        dispatch(productActions.listProduct(response.data));
+        dispatch(productActions.listProduct(response.data.items));
+        setTotalRecords(response.data.totalCount);
+        setRows(response.data.pageSize);
+        setCurrentPage(response.data.currentPage);
+        setFirst((response.data.currentPage - 1) * response.data.pageSize);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-     
     };
     fetchData();
-  }, []);
+  }, [currentPage, rows, onS,show,selectOption]);
+  const onPageChange = (event) => {
+    setFirst(event.first);
+    setRows(event.rows);
+    setCurrentPage(event.page + 1);
+  };
   const handleDelete = async (productId) => {
     if (!confirmPopup()) return;
     try {
@@ -120,6 +155,15 @@ function ProductList() {
       }
     }
   };
+  const footerTemplate = (
+    <Paginator
+      first={first}
+      rows={rows}
+      totalRecords={totalRecords}
+      rowsPerPageOptions={[1, 2, 3, 5, 10, 20, 30, 50, 100]}
+      onPageChange={onPageChange}
+    />
+  );
   return (
     <>
       <ConfirmDialog />
@@ -127,7 +171,7 @@ function ProductList() {
       <ContentMain>
         <div className="card">
           <div className="row  flex justify-content-between  mb-4">
-            <div className="col-md-6">
+            <div className="col-md-4">
               <Button
                 icon={PrimeIcons.TRASH}
                 label="Xóa đã chọn"
@@ -145,6 +189,39 @@ function ProductList() {
                 onClick={() => navigate("/product/create")}
               />
             </div>
+            <div className="col-md-8" style={{ display:'flex',alignItems:'center' }}>
+              <Dropdown
+                value={selectOption}
+                onChange={(e) => setSelectOption(e.value)}
+                options={options}
+                optionLabel="name"
+                className="w-full md:w-14rem"
+                 placeholder="Sắp xếp"
+              />
+              <InputText
+                value={key}
+                onChange={(e) => setKey(e.target.value)}
+                style={{ width: "50%" }}
+                placeholder="Tìm theo tên, danh mục, thương hiệu..."
+              />
+              <Button
+                onClick={() => setOnS(!onS)}
+                tooltip="Nếu muốn tìm tất cả thì nên đặt các thuộc tính khác về mặc định"
+                severity="secondary"
+                type="button"
+              >
+                Tìm
+              </Button>
+              <div className="ml-1" style={{ display: "flex", justifyContent: "space-between",alignItems:'center' }}>
+                <TriStateCheckbox
+                  value={show}
+                  onChange={(e) => setShow(e.value)}
+                />
+                <label className="ml-1">
+                  {show === null ? "Tất cả" : show ? "Hiển thị" : "Ẩn"}
+                </label>
+              </div>
+            </div>
           </div>
           <DataTable
             value={productData}
@@ -152,25 +229,22 @@ function ProductList() {
             selection={selectedProducts}
             onSelectionChange={(e) => setSelectedProducts(e.value)}
             dataKey="id"
-            paginator
             removableSort
-            rows={5}
-            rowsPerPageOptions={[5, 10, 25, 50]}
+            footer={footerTemplate}
             tableStyle={{ minWidth: "50rem" }}
-           
           >
             <Column
               selectionMode="multiple"
               headerStyle={{ width: "5%" }}
             ></Column>
             <Column
-              headerStyle={{ width: "5%" }}
+              headerStyle={{ width: "3%" }}
               sortable
               field="id"
-              header="Mã"
+              header=""
             ></Column>
             <Column
-              headerStyle={{ width: "15%" }}
+              headerStyle={{ width: "10%" }}
               header="Ảnh"
               body={(rowData) => (
                 <GalleryList
@@ -186,14 +260,40 @@ function ProductList() {
               header="Tên"
             ></Column>
             <Column
+              headerStyle={{ width: "10%" }}
+              sortable
+              field="category.name"
+              header="Danh mục"
+            ></Column>
+            <Column
+              headerStyle={{ width: "10%" }}
+              sortable
+              field="brand.name"
+              header="Thương hiệu"
+            ></Column>
+            <Column
               headerStyle={{ width: "8%" }}
               sortable
               field="quantity"
               header="Số lượng"
             ></Column>
+            {/* <Column
+              headerStyle={{ width: "8%" }}
+              sortable
+              sortField="star"
+              header="Đánh giá"
+              body={(rowData)=>(<Rating style={{ width:"2em" }} value={rowData.star} readOnly cancel={false} />)}
+            ></Column> */}
+            <Column
+              headerStyle={{ width: "8%" }}
+              sortable
+              field="totalItemsSold"
+              header="Đã bán"
+            ></Column>
+
             <Column
               header="Chức năng"
-              headerStyle={{ width: "30%" }}
+              headerStyle={{ width: "20%" }}
               body={(rowData) => (
                 <div
                   style={{ display: "flex", justifyContent: "space-around" }}
@@ -207,7 +307,7 @@ function ProductList() {
                   </div>
                   <Button
                     icon={PrimeIcons.EYE}
-                    label="Xem"
+                    tooltip="Xem"
                     raised
                     rounded
                     onClick={() =>
@@ -216,7 +316,8 @@ function ProductList() {
                   />
                   <Button
                     icon={PrimeIcons.USER_EDIT}
-                    label="Sửa"
+                    tooltip="Sửa"
+                    severity="success"
                     raised
                     rounded
                     onClick={() =>
@@ -225,7 +326,7 @@ function ProductList() {
                   />
                   <Button
                     icon={PrimeIcons.TRASH}
-                    label="Xóa"
+                    tooltip="Xóa"
                     severity="danger"
                     onClick={() => handleConfirmDelete(rowData.id)}
                     raised

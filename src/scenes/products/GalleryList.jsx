@@ -3,7 +3,7 @@ import galleryApi from '../../api/galleryApi';
 import { Image } from 'primereact/image';
 import appUrl from '../../api/appUrl';
 
-function GalleryList({productId,galleries}) {
+function GalleryList({galleries}) {
   console.log(galleries)
     const [galleryData,setGalleryData]=useState([])
     // useEffect(() => {
@@ -20,7 +20,7 @@ function GalleryList({productId,galleries}) {
   return (
     <div>
         {galleryData.length>0?
-        <Image src={appUrl.imageURL+(galleryData[0].imagePath??galleryData[0].placeholder)} alt="Image" width="100" preview />
+        <Image src={appUrl.imageURL+(galleryData[0].imagePath??galleryData[0].placeholder)} alt="Image" width="100%" preview />
         :
         <Image src="Không tìm thấy" alt="Image" width="100"  />
 

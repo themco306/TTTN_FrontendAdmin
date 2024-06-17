@@ -54,7 +54,7 @@ function CouponAdd() {
       useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await categoryApi.getAll();
+            const response = await categoryApi.getActive();
             console.log(response.data);
             dispatch(categoryActions.listCategory(response.data));
           } catch (error) {

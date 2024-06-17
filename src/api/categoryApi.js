@@ -8,6 +8,10 @@ const categoryApi={
         var url='categories/'+id
         return axiosInstance.get(url)
     },
+    getActive(){
+        var url='categories/active'
+        return axiosInstance.get(url)
+    },
     getParents(id){
         var url='categories/parent/'+id
         return axiosInstance.get(url)

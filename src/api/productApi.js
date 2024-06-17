@@ -4,6 +4,10 @@ const productApi={
         var url='products'
         return axiosInstance.get(url,{params})
     },
+    getAllPage(params){
+        var url='products/page'
+        return axiosInstance.get(url,{params})
+    },
     get(id,params){
         var url='products/'+id
         return axiosInstance.get(url,{params})

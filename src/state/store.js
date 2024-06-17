@@ -12,6 +12,7 @@ import pageReducers from "./reducers/pageReducers";
 import brandReducers from "./reducers/brandReducers";
 import contactReducers from "./reducers/contactReducers";
 import signalrReducers from "./reducers/signalrReducers";
+import webInfoReducers from "./reducers/webInfoReducers";
 
 export default configureStore({
     reducer: {
@@ -27,6 +28,7 @@ export default configureStore({
         pageReducers,
         brandReducers,
         contactReducers,
-        signalrReducers
+        signalrReducers,
+        webInfoReducers
     }
 })

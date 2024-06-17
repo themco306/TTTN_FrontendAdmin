@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import MenuItems from "./MenuItems";
 import { ClaimType, ClaimValue } from "../helpers/AppClaim";
 import appUrl from "../api/appUrl";
-
+import webInfoApi from "../api/webInfoApi";
+import { Helmet } from "react-helmet";
 function Sidebar() {
   const { user } = useSelector(state => state.authReducer);
+  const { webInfo } = useSelector(state => state.webInfoReducers);
   const menuData=[
     {
       
@@ -134,10 +136,18 @@ function Sidebar() {
     ]
     },
   ]
+
   return (
     <aside className="main-sidebar sidebar-dark-primary elevation-4" style={{ height:'130vh' }}>
+            <Helmet>
+        <title>{"(Admin) "+webInfo?.shopName}</title>
+        <link
+          rel="icon"
+          href={webInfo.icon !== undefined && appUrl.logoURL + webInfo?.icon}
+        />
+      </Helmet>
       <Link to="/" className="brand-link">
-        <span className="brand-text font-weight-light">Admin TK Shop</span>
+        <span className="brand-text font-weight-light">(Admin) {webInfo.shopName}</span>
       </Link>
 
       <div className="sidebar os-host os-theme-light os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-transition os-host-scrollbar-vertical-hidden">

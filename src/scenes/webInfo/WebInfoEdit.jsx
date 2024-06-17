@@ -11,8 +11,11 @@ import { Image } from 'primereact/image';
 import { PrimeIcons } from 'primereact/api';
 import { validateWebInfo } from '../../validate/validateWebInfo';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { webInfoActions } from '../../state/actions/webInfoActions';
 
 function WebInfoEdit() {
+    const dispacth=useDispatch()
     const [loading,setLoading]=useState(false)
     const [errors, setErrors] = useState({});
     const [id,setId]=useState(0);
@@ -94,6 +97,7 @@ formData.append("twitterLink", data.twitterLink);
 formData.append("googleMap", data.googleMap);
             const response=await webInfoApi.update(id,formData)
             if(response.status===200){
+                dispacth(webInfoActions.listInfo(response.data.data))
                 toast.success(response.data.message)
                 setErrors({})
                 setAvatar(null)

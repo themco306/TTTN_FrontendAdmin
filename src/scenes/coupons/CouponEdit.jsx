@@ -102,7 +102,7 @@ function CouponEdit() {
       useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await categoryApi.getAll();
+            const response = await categoryApi.getActive();
             console.log(response.data);
             dispatch(categoryActions.listCategory(response.data));
             if(couponData.applicableProducts!==null&&couponData.applicableProducts.categoryIds.length>0){
@@ -122,6 +122,14 @@ function CouponEdit() {
             fetchData();
         }
       }, [lFecth]);
+      // useEffect(()=>{
+      //   const newProductData = productData.filter(item => 
+      //     !categoryIds.includes(item.category.id) // Loại bỏ những sản phẩm có category ID nằm trong danh sách đã chọn
+      // );
+      // setProductIds([])
+      // // Giả sử bạn có một hàm để cập nhật dữ liệu sản phẩm đã lọc
+      // setTempPData(newProductData);
+      // },[productData])
       const countryTemplate = (option) => {
         return (
             <div style={{ display:'flex',justifyContent:'space-between',alignItems:'center' }}>

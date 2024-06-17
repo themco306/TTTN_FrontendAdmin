@@ -17,26 +17,55 @@ import { InputSwitch } from 'primereact/inputswitch'
 import { toast } from 'react-toastify'
 import { confirmPopup } from 'primereact/confirmpopup'
 import useCustomException from '../../helpers/useCustomException'
+import { Dropdown } from 'primereact/dropdown'
+import { InputText } from 'primereact/inputtext'
+import { TriStateCheckbox } from 'primereact/tristatecheckbox'
+import { Paginator } from 'primereact/paginator'
 
 function UserList() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const handleException = useCustomException();
+    const [first, setFirst] = useState(0);
+    const [rows, setRows] = useState(5);
+    const [totalRecords, setTotalRecords] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
     const userData = useSelector((state) => state.userReducers.users);
     const [selectedUsers, setSelectedUsers] = useState([]);
+    const [key, setKey] = useState("");
+    const [onS, setOnS] = useState(false);
+    const [selectOption, setSelectOption] = useState("");
+    const [show, setShow] = useState(null);
+    const options = [
+      { name: "Mặc định", value: "" },
+      { name: "Mới nhất", value: "create-asc" },
+      { name: "Cũ nhất", value: "create-desc" },
+      // { name: "Mới cập nhật", value: "update-desc" },
+    ];
     useEffect(() => {
       const fetchData = async () => {
         try {
-          var response = await userApi.getAll();
+          const params = {
+            key,
+            status:show === null ? null : show ? 1 : 0,
+            SortOrder:selectOption,
+            pageSize: rows,
+            pageNumber: currentPage,
+          };
+          var response = await userApi.getAll(params);
           console.log(response.data);
-          dispatch(userActions.listUser(response.data));
+          dispatch(userActions.listUser(response.data.items));
+          setTotalRecords(response.data.totalCount);
+        setRows(response.data.pageSize);
+        setCurrentPage(response.data.currentPage);
+        setFirst((response.data.currentPage - 1) * response.data.pageSize);
         } catch (error) {
           console.log(error)
         }
        
       };
       fetchData();
-    }, []);
+    }, [currentPage, rows, onS,show,selectOption]);
     const handleChangeStatus = async (id) => {
       try {
         const response = await userApi.updateStatus(id);
@@ -48,6 +77,11 @@ function UserList() {
           handleException(e)
         }
       }
+    };
+    const onPageChange = (event) => {
+      setFirst(event.first);
+      setRows(event.rows);
+      setCurrentPage(event.page + 1);
     };
     const handleDelete = async (userId) => {
       try {
@@ -119,6 +153,15 @@ function UserList() {
         toast.info("Bạn chưa chọn gì để xóa!");
       }
     };
+    const footerTemplate = (
+      <Paginator
+        first={first}
+        rows={rows}
+        totalRecords={totalRecords}
+        rowsPerPageOptions={[1, 2, 3, 5, 10, 20, 30, 50, 100]}
+        onPageChange={onPageChange}
+      />
+    );
   return (
     <>
     <ConfirmDialog />
@@ -126,7 +169,7 @@ function UserList() {
     <ContentMain>
       <div className="card">
         <div className="row  flex justify-content-between  mb-4">
-          <div className="col-md-6">
+          <div className="col-md-4">
             <Button
               icon={PrimeIcons.TRASH}
               label="Xóa đã chọn"
@@ -144,6 +187,40 @@ function UserList() {
               onClick={() => navigate("/user/create")}
             />
           </div>
+          <div className="col-md-8" style={{ display:'flex',alignItems:'center' }}>
+              <Dropdown
+                value={selectOption}
+                onChange={(e) => setSelectOption(e.value)}
+                options={options}
+                optionLabel="name"
+                className="w-full md:w-14rem"
+                 placeholder="Sắp xếp"
+              />
+              <InputText
+                value={key}
+                onChange={(e) => setKey(e.target.value)}
+                style={{ width: "50%" }}
+                placeholder="Tìm theo họ + tên có dấu, email, số điện thoại..."
+                tooltip='Sử dụng dấu cộng để tìm theo họ&tên vd:Tran+Khanh'
+              />
+              <Button
+                onClick={() => setOnS(!onS)}
+                tooltip="Nếu muốn tìm tất cả thì nên đặt các thuộc tính khác về mặc định"
+                severity="secondary"
+                type="button"
+              >
+                Tìm
+              </Button>
+              <div className="ml-1" style={{ display: "flex", justifyContent: "space-between",alignItems:'center' }}>
+                <TriStateCheckbox
+                  value={show}
+                  onChange={(e) => setShow(e.value)}
+                />
+                <label className="ml-1">
+                  {show === null ? "Tất cả" : show ? "Đã xác thực" : "Chưa xác thực"}
+                </label>
+              </div>
+            </div>
         </div>
         <DataTable
           value={userData}
@@ -151,11 +228,10 @@ function UserList() {
           selection={selectedUsers}
           onSelectionChange={(e) => setSelectedUsers(e.value)}
           dataKey="id"
-          paginator
+         
           removableSort
-          rows={5}
-          rowsPerPageOptions={[5, 10, 25, 50]}
           tableStyle={{ minWidth: "50rem" }}
+          footer={footerTemplate}
         >
           <Column
             selectionMode="multiple"
@@ -185,6 +261,18 @@ function UserList() {
             body={(rowData)=>(
               <span>{rowData.firstName +' '+rowData.lastName}</span>
             )}
+          ></Column>
+                    <Column
+            headerStyle={{ width: "20%" }}
+            sortable
+            header="SĐT"
+            field='phoneNumber'
+          ></Column>
+                              <Column
+            headerStyle={{ width: "20%" }}
+            sortable
+            header="Email"
+            field='email'
           ></Column>
           <Column
             headerStyle={{ width: "8%" }}
@@ -217,7 +305,7 @@ function UserList() {
           ></Column>
           <Column
             header="Chức năng"
-            headerStyle={{ width: "30%" }}
+            headerStyle={{ width: "15%" }}
             body={(rowData) => (
               <div
                 style={{ display: "flex", justifyContent: "space-around" }}
@@ -225,7 +313,7 @@ function UserList() {
               >
                 <Button
                   icon={PrimeIcons.EYE}
-                  label="Xem"
+                  tooltip="Xem"
                   raised
                   rounded
                   onClick={() =>
@@ -234,7 +322,8 @@ function UserList() {
                 />
                 <Button
                   icon={PrimeIcons.USER_EDIT}
-                  label="Sửa"
+                  tooltip="Sửa"
+                  severity='success'
                   raised
                   rounded
                   onClick={() =>
@@ -243,7 +332,7 @@ function UserList() {
                 />
                 <Button
                   icon={PrimeIcons.TRASH}
-                  label="Xóa"
+                  tooltip="Xóa"
                   severity="danger"
                   onClick={() => handleConfirmDelete(rowData.id)}
                   raised
